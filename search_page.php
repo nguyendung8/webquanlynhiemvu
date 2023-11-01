@@ -18,7 +18,7 @@
       $product_quantity = $_POST['product_quantity'];
 
       if($product_quantity==0){
-         $message[] = 'Truyện đã hết hàng!';
+         $message[] = 'Sản phẩm đã hết hàng!';
       }
       else{
          $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
@@ -66,7 +66,7 @@
 
 <section class="search-form">
    <form action="" method="post">
-      <input type="text" name="search" placeholder="Tìm truyện..." class="box">
+      <input type="text" name="search" placeholder="Tìm sản phẩm..." class="box">
       <input type="submit" name="submit" value="Tìm kiếm" class="btn">
    </form>
 </section>

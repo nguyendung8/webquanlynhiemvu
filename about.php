@@ -50,93 +50,6 @@
 
 </section>
 
-<!-- <section class="reviews">
-
-   <h1 class="title">Phản hồi</h1>
-
-   <div class="box-container">
-
-      <div class="box">
-         <img src="images/pic-1.png" alt="">
-         <p>Cảm ơn Comic. đã giúp mình tìm mua được quyển truyện yêu thích của mình.</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
-         <h3>Hoàng Văn Hải</h3>
-      </div>
-
-      <div class="box">
-         <img src="images/pic-2.png" alt="">
-         <p>Cảm ơn Comic. đã giúp mình tìm mua được quyển truyện yêu thích của mình.</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
-         <h3>Nguyễn Thị Bích</h3>
-      </div>
-
-      <div class="box">
-         <img src="images/pic-3.png" alt="">
-         <p>Cảm ơn Comic. đã giúp mình tìm mua được quyển truyện yêu thích của mình.</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
-         <h3>Đào Văn Mạnh</h3>
-      </div>
-
-      <div class="box">
-         <img src="images/pic-4.png" alt="">
-         <p>Cảm ơn Comic. đã giúp mình tìm mua được quyển truyện yêu thích của mình.</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
-         <h3>Vũ Thùy Dương</h3>
-      </div>
-
-      <div class="box">
-         <img src="images/pic-5.png" alt="">
-         <p>Cảm ơn Comic. đã giúp mình tìm mua được quyển truyện yêu thích của mình.</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
-         <h3>Lê Anh Thiện</h3>
-      </div>
-
-      <div class="box">
-         <img src="images/pic-6.png" alt="">
-         <p>Cảm ơn Comic. đã giúp mình tìm mua được quyển truyện yêu thích của mình.</p>
-         <div class="stars">
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star"></i>
-            <i class="fas fa-star-half-alt"></i>
-         </div>
-         <h3>Bùi Anh Thư</h3>
-      </div>
-
-   </div>
-
-</section> -->
 
 <section class="authors">
 
@@ -145,49 +58,13 @@
    <div class="box-container">
 
       <div class="box">
-         <img src="images/anhkien.jpg" alt="">
-         <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-         </div>
-         <h3>Bùi Trung Kiên</h3>
-      </div>
-
-      <!-- <div class="box">
          <img src="images/author-2.jpg" alt="">
          <div class="share">
             <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
             <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
          </div>
-         <h3>Trần Minh Thái</h3>
-      </div> -->
-
-      <!-- <div class="box">
-         <img src="images/author-3.jpg" alt="">
-         <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-         </div>
-         <h3>Hoàng Quốc Chung</h3>
+         <h3>Mina</h3>
       </div>
-
-      <div class="box">
-         <img src="images/author-5.jpg" alt="">
-         <div class="share">
-            <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
-            <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
-         </div>
-         <h3>Phan Mạnh Hoàng</h3>
-      </div> -->
-
    </div>
 
 </section>

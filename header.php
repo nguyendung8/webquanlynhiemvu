@@ -17,9 +17,7 @@
       <div class="flex">
          <div class="share">
             <a href="#" class="fab fa-facebook-f"></a>
-            <a href="#" class="fab fa-twitter"></a>
             <a href="#" class="fab fa-instagram"></a>
-            <a href="#" class="fab fa-linkedin"></a>
          </div>
          <p><a href="login.php">Đăng nhập mới</a> | <a href="register.php">Đăng ký</a> </p>
       </div>

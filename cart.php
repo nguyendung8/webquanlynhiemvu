@@ -53,7 +53,7 @@
 
 <section class="shopping-cart">
 
-   <h1 class="title">Truyện đã được thêm</h1>
+   <h1 class="title">Sản đã được thêm</h1>
 
    <div class="box-container">
       <?php
@@ -67,7 +67,7 @@
       ?>
                <div class="box">
                   <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('Xóa khỏi giỏ hàng?');"></a>
-                  <img src="uploaded_img/<?php echo $fetch_cart['image']; ?>" alt="">
+                  <img width="207px" style="height: 224px !important" src="uploaded_img/<?php echo $fetch_cart['image']; ?>" alt="">
                   <div class="name"><?php echo $fetch_cart['name']; ?></div>
                   <div class="price"><?php echo number_format($fetch_cart['price'],0,',','.' ); ?> VND (SL: <?php echo $fetch_quantity['quantity']; ?>)</div>
                   <form action="" method="post">
