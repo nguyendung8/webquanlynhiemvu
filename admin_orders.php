@@ -107,7 +107,7 @@
                   <p> Email : <span><?php echo $fetch_orders['email']; ?></span> </p>
                   <p> Địa chỉ : <span><?php echo $fetch_orders['address']; ?></span> </p>
                   <p> Ghi chú : <span><?php echo $fetch_orders['note']; ?></span> </p>
-                  <p> Tổng truyện : <span><?php echo $fetch_orders['total_products']; ?></span> </p>
+                  <p> Tổng sản phẩm : <span><?php echo $fetch_orders['total_products']; ?></span> </p>
                   <p> Tổng giá : <span><?php echo number_format($fetch_orders['total_price'],0,',','.' ); ?> VND</span> </p>
                   <p> Phương thức thanh toán : <span><?php echo $fetch_orders['method']; ?></span> </p>
                   <form action="" method="post">

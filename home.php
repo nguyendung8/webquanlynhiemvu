@@ -70,7 +70,7 @@
 
 <section class="products">
 
-   <h1 class="title">Truyện mới nhất</h1>
+   <h1 class="title">Sản phẩm mới nhất</h1>
 
    <div class="box-container">
 

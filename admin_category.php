@@ -18,14 +18,14 @@
       $select_category_name = mysqli_query($conn, "SELECT name FROM `categorys` WHERE name = '$name'") or die('query failed');//truy vấn để kiểm tra loại sách đã tồn tại chưa
 
       if(mysqli_num_rows($select_category_name) > 0){// tồn tại rồi thì thông báo
-         $message[] = 'Loại truyện đã tồn tại.';
+         $message[] = 'Danh mục đã tồn tại.';
       }else{//chưa tồn tại thì thêm mới
          $add_category_query = mysqli_query($conn, "INSERT INTO `categorys`(name, describes) VALUES('$name', '$describes')") or die('query failed');
 
          if($add_category_query){
-         $message[] = 'Thêm thể loại thành công!';
+         $message[] = 'Thêm danh mục thành công!';
          }else{
-            $message[] = 'Không thể thêm thể loại này!';
+            $message[] = 'Không thể thêm danh mục này!';
          }
       }
    }
@@ -56,7 +56,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Loại truyện</title>
+   <title>Danh mục</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <link rel="stylesheet" href="css/admin_style.css">
@@ -68,13 +68,13 @@
 
 <section class="add-products">
 
-   <h1 class="title">Thể loại truyện</h1>
+   <h1 class="title">Danh mục sản phẩm</h1>
 
    <form action="" method="post" enctype="multipart/form-data">
-      <h3>Thêm thể loại</h3>
-      <input type="text" name="name" class="box" placeholder="Thể loại" required>
+      <h3>Thêm danh mục</h3>
+      <input type="text" name="name" class="box" placeholder="Danh mục" required>
       <input type="text" name="describes" class="box" placeholder="Mô tả" required>
-      <input type="submit" value="Thêm truyện" name="add_category" class="btn">
+      <input type="submit" value="Thêm danh mục " name="add_category" class="btn">
    </form>
 
 </section>
@@ -92,12 +92,12 @@
          <div class="name"><?php echo $fetch_categorys['name']; ?></div>
          <div class="sub-name">Mô tả: <?php echo $fetch_categorys['describes']; ?></div>
          <a href="admin_category.php?update=<?php echo $fetch_categorys['id']; ?>" class="option-btn">Cập nhật</a>
-         <a href="admin_category.php?delete=<?php echo $fetch_categorys['id']; ?>" class="delete-btn" onclick="return confirm('Xóa thể loại truyện này?');">Xóa</a>
+         <a href="admin_category.php?delete=<?php echo $fetch_categorys['id']; ?>" class="delete-btn" onclick="return confirm('Xóa thể loại sản phẩm này?');">Xóa</a>
       </div>
       <?php
          }
       }else{
-         echo '<p class="empty">Không có thể loại truyện nào được thêm!</p>';  
+         echo '<p class="empty">Không có danh mục sản phẩm nào được thêm!</p>';  
       }
       ?>
    </div>

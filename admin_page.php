@@ -79,7 +79,7 @@
             $number_of_products = mysqli_num_rows($select_products);
          ?>
          <h3><?php echo $number_of_products; ?></h3>
-         <p>Truyện</p>
+         <p>Sản phẩm</p>
       </div>
 
       <div class="box">

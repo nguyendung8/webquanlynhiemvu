@@ -248,7 +248,6 @@ section{
 }
 
 .header .header-2 .flex{
-   padding:2rem;
    display: flex;
    align-items: center;
    justify-content: space-between;
