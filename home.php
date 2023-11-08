@@ -57,6 +57,21 @@
          font-size: 17px;
          padding-bottom: 5px;
       }
+      .action {
+         display: flex;
+         align-items: center;
+      }
+      .view-product {
+         margin-top: 5px;
+         padding: 5px 20px;
+         background-color: burlywood;
+         font-size: 16px;
+         color: #fff;
+         border-radius: 6px;
+      }
+      .view-product:hover {
+         opacity: 0.9;
+      }
    </style>
 </head>
 <body>
@@ -100,6 +115,7 @@
                   <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
                   <input type="hidden" name="product_price" value="<?php echo $fetch_products['newprice']; ?>">
                   <input type="hidden" name="product_image" value="<?php echo $fetch_products['image']; ?>">
+                  <a href="product_detail.php?product_id=<?php echo $fetch_products['id'] ?>" class="view-product" >Xem thông tin</a>
                   <input type="submit" value="Thêm vào giỏ hàng" name="add_to_cart" class="btn">
                </form>
       <?php
