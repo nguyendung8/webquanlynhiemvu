@@ -206,7 +206,7 @@
                       $result= mysqli_query($conn, "SELECT * FROM `categorys` WHERE id = $cate_id") or die('Query failed');
                       $cate_name = mysqli_fetch_assoc($result)
                    ?>
-                     <option><?=$cate_name['name']?></option>
+                     <option value="<?php echo $cate_name['id']?>"><?=$cate_name['name']?></option>
                      <?php
                         $select_category= mysqli_query($conn, "SELECT * FROM `categorys`") or die('Truy vấn lỗi');
                         while($fetch_category=mysqli_fetch_assoc($select_category)){
