@@ -10,7 +10,7 @@
       header('location:login.php');
    }
 
-   $sql_total_price = "SELECT SUM(total_price) AS TotalPrice FROM orders";
+   $sql_total_price = "SELECT SUM(total_price) AS TotalPrice FROM orders WHERE payment_status = 'Hoàn thành'";
    $total_price = $conn->query($sql_total_price);
    $sql_out_of_stock = "SELECT * FROM products WHERE quantity = 0";
    $result_stock = $conn->query($sql_out_of_stock);
@@ -59,7 +59,7 @@
     <div class="total_price">
         <h4>Tổng doanh thu từ các sản phẩm đã bán được: </h4>
         <div style="font-size: 17px;">
-            <?php echo number_format($total_price->fetch_object()->TotalPrice, 0,',','.') . ' đồng'; ?>
+            <?php echo number_format($total_price->fetch_object()->TotalPrice, 0,',','.') . ' VND'; ?>
         </div>
     </div>
    </div>

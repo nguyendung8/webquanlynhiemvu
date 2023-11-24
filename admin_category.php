@@ -88,7 +88,7 @@
          if(mysqli_num_rows($select_categorys) > 0){
             while($fetch_categorys = mysqli_fetch_assoc($select_categorys)){
       ?>
-      <div class="box">
+      <div style="height: -webkit-fill-available;" class="box">
          <div class="name"><?php echo $fetch_categorys['name']; ?></div>
          <div class="sub-name">Mô tả: <?php echo $fetch_categorys['describes']; ?></div>
          <a href="admin_category.php?update=<?php echo $fetch_categorys['id']; ?>" class="option-btn">Cập nhật</a>

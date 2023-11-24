@@ -34,10 +34,10 @@
 
    <div class="box-container">
 
-      <div class="box">
+      <div style="height: -webkit-fill-available;" class="box">
          <?php
             $total_pendings = 0;
-            $select_pending = mysqli_query($conn, "SELECT total_price FROM `orders` WHERE payment_status = 'pending'") or die('query failed');
+            $select_pending = mysqli_query($conn, "SELECT total_price FROM `orders` WHERE payment_status = 'Chờ xác nhận'") or die('query failed');
             if(mysqli_num_rows($select_pending) > 0){
                while($fetch_pendings = mysqli_fetch_assoc($select_pending)){
                   $total_price = $fetch_pendings['total_price'];
@@ -45,26 +45,11 @@
                };
             };
          ?>
-         <h3><?php echo $total_pendings; ?> VND</h3>
+         <h3><?php echo number_format($total_pendings,0,',','.' ); ?> đ</h3>
          <p>Tổng tiền chờ xử lý</p>
       </div>
 
-      <div class="box">
-         <?php
-            $total_completed = 0;
-            $select_completed = mysqli_query($conn, "SELECT total_price FROM `orders` WHERE payment_status = 'completed'") or die('query failed');
-            if(mysqli_num_rows($select_completed) > 0){
-               while($fetch_completed = mysqli_fetch_assoc($select_completed)){
-                  $total_price = $fetch_completed['total_price'];
-                  $total_completed += $total_price;
-               };
-            };
-         ?>
-         <h3><?php echo $total_completed; ?> VND</h3>
-         <p>Số tiền thanh toán</p>
-      </div>
-
-      <div class="box">
+      <div style="height: -webkit-fill-available;" class="box">
          <?php 
             $select_orders = mysqli_query($conn, "SELECT * FROM `orders`") or die('query failed');
             $number_of_orders = mysqli_num_rows($select_orders);
@@ -73,7 +58,7 @@
          <p>Đơn hàng</p>
       </div>
 
-      <div class="box">
+      <div style="height: -webkit-fill-available;" class="box">
          <?php 
             $select_products = mysqli_query($conn, "SELECT * FROM `products`") or die('query failed');
             $number_of_products = mysqli_num_rows($select_products);
@@ -82,40 +67,22 @@
          <p>Sản phẩm</p>
       </div>
 
-      <div class="box">
+      <div style="height: -webkit-fill-available;" class="box">
          <?php 
             $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE user_type = 'user'") or die('query failed');
             $number_of_users = mysqli_num_rows($select_users);
          ?>
          <h3><?php echo $number_of_users; ?></h3>
-         <p>Người dùng thường</p>
+         <p>Người dùng</p>
       </div>
 
-      <div class="box">
-         <?php 
-            $select_admins = mysqli_query($conn, "SELECT * FROM `users` WHERE user_type = 'admin'") or die('query failed');
-            $number_of_admins = mysqli_num_rows($select_admins);
-         ?>
-         <h3><?php echo $number_of_admins; ?></h3>
-         <p>Admin</p>
-      </div>
-
-      <div class="box">
-         <?php 
-            $select_account = mysqli_query($conn, "SELECT * FROM `users`") or die('query failed');
-            $number_of_account = mysqli_num_rows($select_account);
-         ?>
-         <h3><?php echo $number_of_account; ?></h3>
-         <p>Số tài khoản</p>
-      </div>
-
-      <div class="box">
+      <div style="height: -webkit-fill-available;" class="box">
          <?php 
             $select_messages = mysqli_query($conn, "SELECT * FROM `message`") or die('query failed');
             $number_of_messages = mysqli_num_rows($select_messages);
          ?>
          <h3><?php echo $number_of_messages; ?></h3>
-         <p>Tin nhắn mới</p>
+         <p>Tin nhắn</p>
       </div>
 
    </div>

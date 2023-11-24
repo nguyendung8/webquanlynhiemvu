@@ -45,7 +45,7 @@
          while($fetch_message = mysqli_fetch_assoc($select_message)){
       
    ?>
-   <div class="box">
+   <div style="height: -webkit-fill-available;" class="box">
       <p> Id người dùng : <span><?php echo $fetch_message['user_id']; ?></span> </p>
       <p> Tên : <span><?php echo $fetch_message['name']; ?></span> </p>
       <p> Số điện thoại : <span><?php echo $fetch_message['number']; ?></span> </p>

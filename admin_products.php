@@ -159,7 +159,7 @@
          if(mysqli_num_rows($select_products) > 0){
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
-               <div class="box">
+               <div style="height: -webkit-fill-available;" class="box">
                   <img style="border-radius: 4px;" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                   <div class="name"><?php echo $fetch_products['name']; ?></div>
                   <div class="sub-name">Thương hiệu: <?php echo $fetch_products['trademark']; ?></div>
@@ -198,6 +198,7 @@
                   <input type="hidden" name="update_p_id" value="<?php echo $fetch_update['id']; ?>">
                   <input type="hidden" name="update_old_image" value="<?php echo $fetch_update['image']; ?>">
                   <input type="hidden" name="update_trademark" value="<?php echo $fetch_update['trademark']; ?>">
+                  <input type="hidden" name="update_discount" value="<?php echo $fetch_update['discount']; ?>">
                   <img src="uploaded_img/<?php echo $fetch_update['image']; ?>" alt="">
                   <input type="text" name="update_name" value="<?php echo $fetch_update['name']; ?>" class="box" required placeholder="Tên sản phẩm">
                   <select name="update_category" class="box">

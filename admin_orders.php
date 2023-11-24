@@ -99,7 +99,7 @@
          if(mysqli_num_rows($select_orders) > 0){
             while($fetch_orders = mysqli_fetch_assoc($select_orders)){
       ?>
-               <div class="box">
+               <div style="height: -webkit-fill-available;" class="box">
                   <p> Id người dùng : <span><?php echo $fetch_orders['user_id']; ?></span> </p>
                   <p> Ngày đặt : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
                   <p> Tên : <span><?php echo $fetch_orders['name']; ?></span> </p>
