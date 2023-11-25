@@ -170,9 +170,9 @@
                      $result= mysqli_query($conn, "SELECT * FROM `categorys` WHERE id = $cate_id") or die('Query failed');
                      $cate_name = mysqli_fetch_assoc($result)
                    ?>
-                  <div class="name"><?php echo $fetch_products['name']; ?> (<?php echo $cate_name['name']; ?>)</div>
+                  <div class="name"><?php echo $fetch_products['name']; ?></div>
                   <p>Mô tả: <?php echo $fetch_products['describes']; ?></p>
-                  <div class="price"><?php echo number_format($fetch_products['newprice'],0,',','.' ); ?>/<span style="text-decoration-line:line-through"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> VND (<?php echo $fetch_products['discount']; ?>% SL: <?php echo $fetch_products['quantity']; ?>)</div>
+                  <div class="price"><span style="text-decoration-line:line-through; text-decoration-thickness: 2px; text-decoration-color: grey"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> <u style="text-decoration: underline !important;">đ</u> /<?php echo number_format($fetch_products['newprice'],0,',','.' ); ?> <u style="text-decoration: underline !important;">đ</u> (-<?php echo $fetch_products['discount']; ?>%)</div>
                   <span style="font-size: 17px; display: flex;">Số lượng mua:</span>
                   <input type="number" min="<?=($fetch_products['quantity']>0) ? 1:0 ?>" max="<?php echo $fetch_products['quantity']; ?>" name="product_quantity" value="<?=($fetch_products['quantity']>0) ? 1:0 ?>" class="qty">
                   <input type="hidden" name="product_name" value="<?php echo $fetch_products['name']; ?>">
@@ -200,12 +200,12 @@
    <div class="flex">
 
       <div class="image">
-         <img src="images/about-img.jpg" alt="">
+         <img height="307px;" style="border-radius: 4px;" src="images/about_img.jpg" alt="">
       </div>
 
       <div class="content">
-         <h3>Comic</h3>
-         <p>Từ hội những bạn trẻ yêu thích đọc truyện, chúng mình muốn cùng chia sẻ những đam mê và sở thích tới mọi người.</p>
+         <h3>Food</h3>
+         <p>Thưởng thức một món ăn ngon là cách tốt nhất để giải tỏa stress. Hãy ghé quán em để trải nghiệm menu ăn vặt tuyệt vời nhất.</p>
       </div>
 
    </div>

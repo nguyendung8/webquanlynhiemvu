@@ -40,13 +40,19 @@
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <link rel="stylesheet" href="css/style.css">
-
+   <style>
+      .head {
+         background: url(./images/head_img.jpg) no-repeat;
+         background-size: cover;
+         background-position: center;
+      }
+   </style>
 </head>
 <body>
    
 <?php include 'header.php'; ?>
 
-<div class="heading">
+<div class="heading head">
    <h3>Liên hệ</h3>
    <p> <a href="home.php">Trang chủ</a> / Liên hệ </p>
 </div>

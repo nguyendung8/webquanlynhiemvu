@@ -20,14 +20,20 @@
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <link rel="stylesheet" href="css/style.css">
-
+   <style>
+      .head {
+         background: url(./images/head_img.jpg) no-repeat;
+         background-size: cover;
+         background-position: center;
+      }
+   </style>
 </head>
 <body>
    
 <?php include 'header.php'; ?>
 
-<div class="heading">
-   <h3>Về Comic</h3>
+<div class="heading head">
+   <h3>Về Food</h3>
    <p> <a href="home.php">Trang chủ</a> / Thông tin </p>
 </div>
 
@@ -36,13 +42,13 @@
    <div class="flex">
 
       <div class="image">
-         <img src="images/about-img.jpg" alt="">
+         <img height="400px" src="images/about_img.jpg" alt="">
       </div>
 
       <div class="content">
-         <h3>Tại sao lại có Comic.</h3>
-         <p>Từ những bạn trẻ đam mê đọc những quyển truyện trinh thám và tiểu thuyết, chúng mình đã xây dựng nên website này để giúp mọi người có thể dễ dàng tìm kiếm và mua được những quyển truyện yêu thích của mình.</p>
-         <p>Qua một thời gian phát triển, Comic mong muốn mang đến những quyển truyện hay, sâu sắc và hấp dẫn đến tay các bạn đọc.</p>
+         <h3>Tại sao lại có Food.</h3>
+         <p>Đồ ăn nhanh thường được phục vụ ngay tại quán hoặc có thể mang đi, giúp người tiêu dùng tiết kiệm thời gian và công sức với việc nấu ăn tại nhà.</p>
+         <p> Ăn uống lành mạnh sẽ giúp cân bằng và cải thiện tâm trạng theo chiều hướng tốt hơn.</p>
          <a href="contact.php" class="btn">Liên hệ</a>
       </div>
 
@@ -53,7 +59,7 @@
 
 <section class="authors">
 
-   <h1 class="title">Thành viên của Comic</h1>
+   <h1 class="title">Thành viên của Food</h1>
 
    <div class="box-container">
 

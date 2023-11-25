@@ -19,8 +19,7 @@
       <div class="box">
          <h3>Thông tin liên lạc</h3>
          <p> <i class="fas fa-phone"></i> +84123456789 </p>
-         <p> <i class="fas fa-phone"></i> +84987654321 </p>
-         <p> <i class="fas fa-envelope"></i> abc@gmail.com </p>
+         <p> <i class="fas fa-envelope"></i> vothu@gmail.com </p>
          <p> <i class="fas fa-map-marker-alt"></i> Hà nội - Việt Nam </p>
       </div>
 
@@ -32,6 +31,6 @@
 
    </div>
 
-   <p class="credit"> &copy; Copyright  @ <?php echo date('Y'); ?> by <span> Bui Trung Kien</span> </p>
+   <p class="credit"> &copy; Copyright  @ <?php echo date('Y'); ?> by <span> Vo Thu</span> </p>
 
 </section>
