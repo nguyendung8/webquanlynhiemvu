@@ -48,7 +48,15 @@
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
    <link rel="stylesheet" href="css/style.css">
-
+   <style>
+      .forget-btn {
+         font-size: 20px;
+         color: #9C27B0;
+      }
+      .forget-btn:hover {
+         opacity: 0.8;
+      }
+   </style>
 </head>
 <body>
 
@@ -70,7 +78,9 @@ if(isset($message)){
       <h3>Đăng nhập</h3>
       <input type="email" name="email" placeholder="Email" required class="box">
       <input type="password" name="password" placeholder="Mật khẩu" required class="box">
-      <input type="submit" name="submit" value="Đăng nhập" class="btn">
+      <input style="margin-bottom: 7px;" type="submit" name="submit" value="Đăng nhập" class="btn">
+      <br>
+      <a class="forget-btn" href="forget_password.php">Quên mật khẩu ?</a>
       <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký</a></p>
    </form>
 

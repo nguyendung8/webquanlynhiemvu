@@ -84,9 +84,6 @@
 							<label style="width: auto"><?php echo $item['name']; ?></label>
 						</td>
 						<td>
-							<label style="width: auto"><?php echo $item['trademark']; ?></label>
-						</td>
-						<td>
 							<label style="width: auto"><?php echo $item['describes']; ?></label>
 						</td>
 						<td>
@@ -119,9 +116,6 @@
 						</td>
 						<td>
 							<label style="width: auto"><?php echo $item['name']; ?></label>
-						</td>
-						<td>
-							<label style="width: auto"><?php echo $item['trademark']; ?></label>
 						</td>
 						<td>
 							<label style="width: auto"><?php echo $item['describes']; ?></label>

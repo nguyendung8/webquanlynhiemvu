@@ -24,8 +24,8 @@
    </div>
 
    <div class="header-2">
-      <div style="padding:1rem;" class="flex">
-         <a href="home.php" class="logo"><img width="80px" height="70px" src="./images/logo.png"></a>
+      <div class="flex">
+         <a href="home.php" class="logo"><img width="120px" height="104px" src="./images/logo_food.png"></a>
 
          <nav class="navbar">
             <a href="home.php">Trang chủ</a>

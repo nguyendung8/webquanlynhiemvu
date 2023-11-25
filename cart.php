@@ -65,7 +65,7 @@
                $select_quantity = mysqli_query($conn, "SELECT * FROM `products` WHERE name='$name_product'");
                $fetch_quantity = mysqli_fetch_assoc($select_quantity); 
       ?>
-               <div class="box">
+               <div style="height: -webkit-fill-available;" class="box">
                   <a href="cart.php?delete=<?php echo $fetch_cart['id']; ?>" class="fas fa-times" onclick="return confirm('Xóa khỏi giỏ hàng?');"></a>
                   <img width="207px" style="height: 224px !important" src="uploaded_img/<?php echo $fetch_cart['image']; ?>" alt="">
                   <div class="name"><?php echo $fetch_cart['name']; ?></div>

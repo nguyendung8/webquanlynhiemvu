@@ -137,10 +137,9 @@
             $select_products = mysqli_query($conn, "SELECT p.* FROM products p JOIN categorys c ON p.cate_id = c.id  WHERE cate_id = $cate_id AND p.quantity > 0") or die('query failed');
             while($fetch_products = mysqli_fetch_assoc($select_products)){
                   ?>
-                     <form action="" method="post" class="box">
+                     <form style="height: -webkit-fill-available;" action="" method="post" class="box">
                         <img width="207px" height="224px" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                         <div class="name"><?php echo $fetch_products['name']; ?></div>
-                        <div class="sub-name">Thương hiệu: <?php echo $fetch_products['trademark']; ?></div>
                         <div class="sub-name">Mô tả: <?php echo $fetch_products['describes']; ?></div>
                         <div class="price"><?php echo number_format($fetch_products['newprice'],0,',','.' ); ?>/<span style="text-decoration-line:line-through; text-decoration-thickness: 2px; text-decoration-color: grey"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> VND (<?php echo $fetch_products['discount']; ?>% SL: <?php echo $fetch_products['quantity']; ?>)</div>
                         <span style="font-size: 17px; display: flex;">Số lượng mua:</span>

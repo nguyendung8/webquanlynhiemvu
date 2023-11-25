@@ -44,7 +44,7 @@
          if(mysqli_num_rows($order_query) > 0){
             while($fetch_orders = mysqli_fetch_assoc($order_query)){
       ?>
-      <div class="box">
+      <div style="height: -webkit-fill-available;" class="box">
          <p> Ngày đặt hàng : <span><?php echo $fetch_orders['placed_on']; ?></span> </p>
          <p> Họ tên : <span><?php echo $fetch_orders['name']; ?></span> </p>
          <p> Số điện thoại : <span><?php echo $fetch_orders['number']; ?></span> </p>

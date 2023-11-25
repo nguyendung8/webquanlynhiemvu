@@ -114,10 +114,6 @@
                     <img class="peoductdetail-img" src="uploaded_img/<?php echo $productItem['image']; ?>" alt="">
                 </div>
                 <p class="peoductdetail-author">
-                    Thương hiệu: 
-                    <?php echo ($productItem['trademark']) ?>
-                </p>
-                <p class="peoductdetail-author">
                     Số lượng còn: 
                     <?php echo ($productItem['quantity']) ?>
                 </p>

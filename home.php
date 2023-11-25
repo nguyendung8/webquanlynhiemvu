@@ -72,18 +72,82 @@
       .view-product:hover {
          opacity: 0.9;
       }
+      .slideshow-container {
+         position: relative;
+         max-width: 800px;
+         margin: 0 auto;
+         overflow: hidden; /* Để ẩn phần ngoài khung hình ảnh */
+      }
+      .slide {
+         display: none;
+         animation: fade 2s ease-in-out infinite; /* Sử dụng animation để thêm hiệu ứng lướt sang */
+      }
+      @keyframes fade {
+         0%, 100% {
+            opacity: 0;
+         }
+         25%, 75% {
+            opacity: 1;
+         }
+      }
+      .slide img {
+         width: 100%;
+         height: 485px;
+         border-radius: 9px;
+      }
+      .borrow_book:hover { 
+         opacity: 0.9;
+      }
+      .borrow_book {
+         padding: 5px 25px;
+         background-image: linear-gradient(to right, #ff9800, #F7695D);
+         border-radius: 4px;
+         cursor: pointer;
+         font-size: 20px;
+         color: #fff;
+         font-weight: 700;
+      }
+      .home-banner {
+         min-height: 70vh;
+         background:linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)), url(./images/bg_home.jpg) no-repeat;
+         background-size: cover;
+         background-position: center;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
    </style>
 </head>
 <body>
    
 <?php include 'header.php'; ?>
 
-<section class="home">
+<section class="home home-banner">
 
-   <div class="content">
-      <h3>Mỗi ngày một quyển truyện.</h3>
-      <p>Những quyển truyện đều mang trong mình những bài học ý nghĩa, những trải nghiệm đáng giá.</p>
-      <a href="about.php" class="white-btn">Khám phá thêm</a>
+<div class="content">
+      <div class="slideshow-container">
+         <div class="slide fade">
+            <img src="./images/slide1.jpg" alt="slide 1">
+         </div>
+         <div class="slide fade">
+            <img src="./images/slide2.jpg" alt="slide 2">
+         </div>
+         <div class="slide fade">
+            <img src="./images/slide3.jpg" alt="slide 3">
+         </div>
+         <div class="slide fade">
+            <img src="./images/slide4.jpg" alt="slide 3">
+         </div>
+         <div class="slide fade">
+            <img src="./images/slide5.png" alt="slide 3">
+         </div>
+         <div class="slide fade">
+            <img src="./images/slide6.jpg" alt="slide 3">
+         </div>
+         <div class="slide fade">
+            <img src="./images/slide7.png" alt="slide 3">
+         </div>
+      </div>
    </div>
 
 </section>
@@ -95,11 +159,11 @@
    <div class="box-container">
 
       <?php  
-         $select_products = mysqli_query($conn, "SELECT * FROM `products` ORDER BY id DESC  LIMIT 6") or die('query failed');
+         $select_products = mysqli_query($conn, "SELECT * FROM `products` ORDER BY id DESC  LIMIT 8") or die('query failed');
          if(mysqli_num_rows($select_products) > 0){
             while($fetch_products = mysqli_fetch_assoc($select_products)){
       ?>
-               <form action="" method="post" class="box">
+               <form style="height: -webkit-fill-available;" action="" method="post" class="box">
                   <img width="207px" height="224px" src="uploaded_img/<?php echo $fetch_products['image']; ?>" alt="">
                   <?php
                      $cate_id =  $fetch_products['cate_id'];
@@ -107,7 +171,6 @@
                      $cate_name = mysqli_fetch_assoc($result)
                    ?>
                   <div class="name"><?php echo $fetch_products['name']; ?> (<?php echo $cate_name['name']; ?>)</div>
-                  <p>Thương hiệu: <?php echo $fetch_products['trademark']; ?></p>
                   <p>Mô tả: <?php echo $fetch_products['describes']; ?></p>
                   <div class="price"><?php echo number_format($fetch_products['newprice'],0,',','.' ); ?>/<span style="text-decoration-line:line-through"><?php echo number_format($fetch_products['price'],0,',','.' ); ?></span> VND (<?php echo $fetch_products['discount']; ?>% SL: <?php echo $fetch_products['quantity']; ?>)</div>
                   <span style="font-size: 17px; display: flex;">Số lượng mua:</span>
@@ -162,6 +225,7 @@
 <?php include 'footer.php'; ?>
 
 <script src="js/script.js"></script>
+<script src="js/slide_show.js"></script>
 
 </body>
 </html>
