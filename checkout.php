@@ -43,7 +43,7 @@
                $name_product= $fetch_quantity['name'];
                $product_quantity= mysqli_query($conn, "SELECT * FROM `products` WHERE name='$name_product'");
                $fetch_product_quantity= mysqli_fetch_assoc($product_quantity);
-               $nums= $fetch_product_quantity['quantity']-$fetch_quantity['quantity'];
+               $nums= $fetch_product_quantity['quantity'] - $fetch_quantity['quantity'];
                mysqli_query($conn, "UPDATE `products` SET quantity='$nums' WHERE name='$name_product'");
             }
             mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('query failed');

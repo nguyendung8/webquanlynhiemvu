@@ -20,7 +20,7 @@
             $out_of_stock[] = $row;
         }
     }
-	$sql_best_seller = "SELECT * FROM products WHERE initial_quantity - quantity > 20";
+	$sql_best_seller = "SELECT * FROM products WHERE initial_quantity - quantity > 10";
    	$result_seller = $conn->query($sql_best_seller);
 	$best_seller = [];
 	if ($result_seller->num_rows > 0) {
@@ -71,7 +71,6 @@
               <tr>
                   <th>ID</th>
                   <th>Tên sản phẩm</th>
-                  <th>Thương hiệu </th>
                   <th>Mô tả</th>
                   <th>Số lượng sản phẩm đã bán</th>
               </tr>
@@ -105,7 +104,6 @@
               <tr>
                   <th>ID</th>
                   <th>Tên sản phẩm</th>
-                  <th>Thương hiệu</th>
                   <th>Mô tả</th>
                   <th>Số lượng còn</th>
               </tr>
