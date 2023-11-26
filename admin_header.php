@@ -17,7 +17,7 @@
 
       <a href="admin_page.php" class="logo">Quản lý</a>
 
-      <nav class="navbar">
+      <nav style="margin-bottom: 0px;" class="navbar">
          <a href="admin_page.php">Trang chủ</a>
          <a href="admin_products.php">Sản phẩm</a>
          <a href="admin_category.php">Danh mục</a>
