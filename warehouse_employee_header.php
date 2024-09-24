@@ -20,7 +20,8 @@
       </div>
 
       <nav style="margin-bottom: 0px !important;min-height: unset !important;" class="navbar">
-         <a style="text-decoration: none !important;" href="admin_accounts.php">Quản lý tài khoản</a>
+         <a style="text-decoration: none !important;" href="employee_entry.php">Quản lý nhập kho</a>
+         <a style="text-decoration: none !important;" href="employee_export.php">Quản lý xuất kho</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>
