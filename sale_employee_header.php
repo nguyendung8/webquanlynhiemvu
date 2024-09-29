@@ -21,6 +21,7 @@
 
       <nav style="margin-bottom: 0px !important;min-height: unset !important;" class="navbar">
          <a style="text-decoration: none !important;" href="employee_orders.php">Quản lý đơn hàng</a>
+         <a style="text-decoration: none !important;" href="admin_orders.php">Quản lý đơn của khách hàng</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>

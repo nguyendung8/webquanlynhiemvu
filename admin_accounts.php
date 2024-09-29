@@ -85,7 +85,7 @@ if (isset($_POST['update_account'])) { // Cập nhật tài khoản
         <input type="password" name="MatKhau" class="box" placeholder="Mật khẩu" required>
         <select name="MaPhanQuyen" class="box">
             <?php
-            $select_roles = mysqli_query($conn, "SELECT * FROM `PhanQuyen` WHERE MaPhanQuyen != 1") or die('query failed');
+            $select_roles = mysqli_query($conn, "SELECT * FROM `PhanQuyen` WHERE MaPhanQuyen != 1 AND MaPhanQuyen != 6") or die('query failed');
             if (mysqli_num_rows($select_roles) > 0) {
                 while ($fetch_roles = mysqli_fetch_assoc($select_roles)) {
                     echo "<option value='" . $fetch_roles['MaPhanQuyen'] . "'>" . $fetch_roles['TenPhanQuyen'] . "</option>";
@@ -113,7 +113,7 @@ if (isset($_POST['update_account'])) { // Cập nhật tài khoản
             </thead>
             <tbody>
                 <?php
-                $select_accounts = mysqli_query($conn, "SELECT * FROM `TaiKhoan` WHERE MaPhanQuyen != 1") or die('query failed');
+                $select_accounts = mysqli_query($conn, "SELECT * FROM `TaiKhoan` WHERE MaPhanQuyen != 1 AND MaPhanQuyen != 6") or die('query failed');
                 if (mysqli_num_rows($select_accounts) > 0) {
                     while ($fetch_accounts = mysqli_fetch_assoc($select_accounts)) {
                         // Lấy tên phân quyền dựa vào MaPhanQuyen

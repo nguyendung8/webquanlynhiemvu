@@ -43,6 +43,14 @@
 
          }
 
+         elseif($row['MaPhanQuyen'] == 6){
+
+            $_SESSION['user_name'] = $row['TenTK'];
+            $_SESSION['user_id'] = $row['MaTK'];
+            header('location:user_homepage.php');
+
+         }
+
       }else{
          $message[] = 'Email hoặc mật khẩu không chính xác!';
       }
@@ -95,6 +103,7 @@ if(isset($message)){
       <input type="submit" name="submit" value="Đăng nhập" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
       <br>
       <a class="forget-btn" style="color: blue; text-decoration: none;" href="forget_password.php">Quên mật khẩu ?</a>
+      <p>Bạn chưa có tài khoản? <a style="color: blue; text-decoration: none;" href="register.php">Đăng ký</a></p>
    </form>
 
 </div>
