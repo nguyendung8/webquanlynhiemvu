@@ -6,7 +6,7 @@ session_start();
 $owner_id = $_SESSION['owner_id']; // Tạo session owner
 
 if (!isset($owner_id)) {
-    header('location:home.php'); // Nếu không tồn tại session owner thì chuyển về trang đăng nhập
+    header('location:login.php'); // Nếu không tồn tại session owner thì chuyển về trang đăng nhập
 }
 
 if (isset($_POST['add_ncc'])) { // Thêm nhà cung cấp mới

@@ -5,7 +5,7 @@ session_start();
 $owner_id = $_SESSION['owner_id'];
 
 if (!isset($owner_id)) {
-    header('location:home.php');
+    header('location:login.php');
 }
 
 if (isset($_POST['add_book'])) {
@@ -30,8 +30,12 @@ if (isset($_POST['add_book'])) {
 
 if (isset($_GET['delete'])) {
     $delete_id = $_GET['delete'];
-    mysqli_query($conn, "DELETE FROM `sach` WHERE MaSach = '$delete_id'") or die('query failed');
-    header('location:owner_books.php');
+    try {
+        mysqli_query($conn, "DELETE * FROM `sach` WHERE MaSach = '$delete_id'") or die('query failed');
+        header('location:owner_books.php');
+    } catch (mysqli_sql_exception $e) {
+        $message[] = 'Không thể xóa sách này!';
+    }
 }
 
 ?>

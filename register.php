@@ -21,7 +21,7 @@ if(isset($_POST['submit'])){
          // Đăng ký tài khoản vào bảng TaiKhoan
          mysqli_query($conn, "INSERT INTO `TaiKhoan` (TenTK, MatKhau, MaPhanQuyen) VALUES('$tenTK', '$pass', '$maPhanQuyen')") or die('Query failed');
          $message[] = 'Đăng ký thành công!';
-         header('location:home.php');
+         header('location:login.php');
       }
    }
 
@@ -64,7 +64,7 @@ if(isset($message)){
       <input type="password" name="password" placeholder="Nhập mật khẩu" required class="box">
       <input type="password" name="cpassword" placeholder="Nhập lại mật khẩu" required class="box">
       <input type="submit" name="submit" value="Đăng ký ngay" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
-      <p>Bạn đã có tài khoản? <a style="color: blue; text-decoration: none;" href="home.php">Đăng nhập</a></p>
+      <p>Bạn đã có tài khoản? <a style="color: blue; text-decoration: none;" href="login.php">Đăng nhập</a></p>
    </form>
 
 </div>

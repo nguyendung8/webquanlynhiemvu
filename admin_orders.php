@@ -7,7 +7,7 @@
    $sale_id = $_SESSION['sale_id'];
 
    if (!isset($sale_id)) {
-      header('location:home.php');
+      header('location:login.php');
    }
 
    if(isset($_POST['update_order'])){//cập nhật trạng thái đơn hàng từ submit='update_order'

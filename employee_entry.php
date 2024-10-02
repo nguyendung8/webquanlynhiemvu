@@ -5,7 +5,7 @@ session_start();
 $warehouse_id = $_SESSION['warehouse_id'];
 
 if (!isset($warehouse_id)) {
-    header('location:home.php');
+    header('location:login.php');
 }
 
 if (isset($_POST['add_receipt'])) {

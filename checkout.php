@@ -7,7 +7,7 @@
    $user_id = $_SESSION['user_id']; //tạo session người dùng thường
 
    if(!isset($user_id)){// session không tồn tại => quay lại trang đăng nhập
-      header('location:home.php');
+      header('location:login.php');
    }
 
    if(isset($_POST['order_btn'])){//nhập thông tin đơn hàng từ form submit name='order_btn'

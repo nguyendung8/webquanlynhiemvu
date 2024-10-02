@@ -6,7 +6,7 @@ session_start();
 $admin_id = $_SESSION['admin_id']; // Tạo session admin
 
 if (!isset($admin_id)) {
-    header('location:home.php'); // Nếu không tồn tại session admin thì chuyển về trang đăng nhập
+    header('location:login.php'); // Nếu không tồn tại session admin thì chuyển về trang đăng nhập
 }
 
 if (isset($_POST['add_account'])) { // Thêm tài khoản mới

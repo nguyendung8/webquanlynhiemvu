@@ -3,35 +3,35 @@ include 'config.php';
 
 session_start();
 
-$user_id = $_SESSION['user_id']; // tạo session người dùng
-
-if (!isset($user_id)) { // session không tồn tại => quay lại trang đăng nhập
-    header('location:home.php');
-}
+    $user_id = @$_SESSION['user_id']; // tạo session người dùng
 
 if (isset($_POST['add_to_cart'])) { // thêm sách vào giỏ hàng từ form submit name='add_to_cart'
-    $product_name = $_POST['product_name'];
-    $product_price = $_POST['product_price'];
-    $product_quantity = $_POST['product_quantity'];
-
-    if ($product_quantity == 0) {
-        $message[] = 'Sản phẩm đã hết hàng!';
+    if(!isset($user_id)) {
+        $message[] = 'Vui lòng đăng nhập để mua hàng!';
     } else {
-        $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
+        $product_name = $_POST['product_name'];
+        $product_price = $_POST['product_price'];
+        $product_quantity = $_POST['product_quantity'];
 
-        if (mysqli_num_rows($check_cart_numbers) > 0) { // kiểm tra sách có trong giỏ hàng chưa và tăng số lượng
-            $result = mysqli_fetch_assoc($check_cart_numbers);
-            $num = $result['quantity'] + $product_quantity;
-            $select_quantity = mysqli_query($conn, "SELECT * FROM `Sach` WHERE TenSach='$product_name'");
-            $fetch_quantity = mysqli_fetch_assoc($select_quantity);
-            if ($num > $fetch_quantity['SoLuong']) {
-                $num = $fetch_quantity['SoLuong'];
-            }
-            mysqli_query($conn, "UPDATE `cart` SET quantity='$num', price='$product_price' WHERE name = '$product_name' AND user_id = '$user_id'");
-            $message[] = 'Sản phẩm đã có trong giỏ hàng và được thêm số lượng!';
+        if ($product_quantity == 0) {
+            $message[] = 'Sản phẩm đã hết hàng!';
         } else {
-            mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity')") or die('query failed');
-            $message[] = 'Sản phẩm đã được thêm vào giỏ hàng!';
+            $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('query failed');
+
+            if (mysqli_num_rows($check_cart_numbers) > 0) { // kiểm tra sách có trong giỏ hàng chưa và tăng số lượng
+                $result = mysqli_fetch_assoc($check_cart_numbers);
+                $num = $result['quantity'] + $product_quantity;
+                $select_quantity = mysqli_query($conn, "SELECT * FROM `Sach` WHERE TenSach='$product_name'");
+                $fetch_quantity = mysqli_fetch_assoc($select_quantity);
+                if ($num > $fetch_quantity['SoLuong']) {
+                    $num = $fetch_quantity['SoLuong'];
+                }
+                mysqli_query($conn, "UPDATE `cart` SET quantity='$num', price='$product_price' WHERE name = '$product_name' AND user_id = '$user_id'");
+                $message[] = 'Sản phẩm đã có trong giỏ hàng và được thêm số lượng!';
+            } else {
+                mysqli_query($conn, "INSERT INTO `cart`(user_id, name, price, quantity) VALUES('$user_id', '$product_name', '$product_price', '$product_quantity')") or die('query failed');
+                $message[] = 'Sản phẩm đã được thêm vào giỏ hàng!';
+            }
         }
     }
 }

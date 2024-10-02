@@ -91,7 +91,7 @@
     }
     ?>
    <div class="change-password">
-    <a href="./home.php" style="color: blue;" class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Quay lại</a>
+    <a href="./login.php" style="color: blue;" class="back"><i class="fa fa-arrow-left" aria-hidden="true"></i> Quay lại</a>
     <h1 class="cp-title">Quên mật khẩu</h1>
     <form method="POST">
     <div class="form-group">
