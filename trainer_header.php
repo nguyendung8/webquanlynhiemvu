@@ -16,12 +16,11 @@
    <div class="flex" style="padding: 10px 0 !important;">
 
       <div class="logo">
-         <img width="110px" src="./image/logo-tv.png" alt="">
+         <img width="90px" src="./image/gym-logo.png" alt="">
       </div>
 
-      <nav style="margin-bottom: 0px !important;min-height: unset !important;" class="navbar">
-         <a style="text-decoration: none !important;" href="employee_entry.php">Quản lý nhập kho</a>
-         <a style="text-decoration: none !important;" href="employee_export.php">Quản lý xuất kho</a>
+      <nav style="margin-bottom: 0px !important; min-height: unset !important;" class="navbar">
+         <a style="text-decoration: none !important;" href="trainers.php">Điểm danh</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>
