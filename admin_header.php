@@ -1,27 +1,31 @@
 <?php
-   //nhúng vào các trang quản trị
-   if(isset($message)){
-      foreach($message as $message){//in ra thông báo trên cùng khi biến message được gán giá trị từ các trang quản trị
+   //nhúng vào các trang bán hàng
+   if(isset($message)){ // hiển thị thông báo sau khi thao tác với biến message được gán giá trị
+      foreach($message as $msg){
          echo '
-         <div class="message">
-            <span>'.$message.'</span>
-            <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+         <div class=" alert alert-info alert-dismissible fade show" role="alert">
+            <span style="font-size: 16px;">'.$msg.'</span>
+            <i style="font-size: 20px; cursor: pointer" class="fas fa-times" onclick="this.parentElement.remove();"></i>
          </div>';
       }
    }
 ?>
+
+
+<link rel="stylesheet" href="./css/new_style.css">
 
 <header class="header">
 
    <div class="flex" style="padding: 10px 0 !important;">
 
       <div class="logo">
-         <img width="90px" src="./image/gym-logo.png" alt="">
+         <img width="70px" src="./image/logo-hospital.png" alt="">
       </div>
 
       <nav style="margin-bottom: 0px !important; min-height: unset !important;" class="navbar">
-         <a style="text-decoration: none !important;" href="admin_members.php">Quản lý thành viên</a>
-         <a style="text-decoration: none !important;" href="admin_trainers.php">Quản lý huấn luyện viên</a>
+         <a style="text-decoration: none !important;" href="admin_doctors.php">Quản lý bác sĩ</a>
+         <a style="text-decoration: none !important;" href="admin_patients.php">Quản lý bệnh nhân</a>
+         <a style="text-decoration: none !important;" href="admin_schedule.php">Quản lý lịch làm việc</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>

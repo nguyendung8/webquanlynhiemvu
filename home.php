@@ -4,23 +4,44 @@ session_start();
 
 if (isset($_POST['submit'])) { // Lấy thông tin đăng nhập từ form với submit name='submit'
 
-    $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $password = mysqli_real_escape_string($conn, md5($_POST['password'])); // Mã hóa mật khẩu bằng md5
+   $email = mysqli_real_escape_string($conn, $_POST['email']);
+   $password = mysqli_real_escape_string($conn, md5($_POST['password'])); // Mã hóa mật khẩu bằng md5
 
-    // Truy vấn kiểm tra thông tin đăng nhập trong bảng `quan_tri_vien`
-    $select_quan_tri_vien = mysqli_query($conn, "SELECT * FROM `quan_tri_vien` WHERE email = '$email' AND mat_khau = '$password'") or die('query failed');
+   // Truy vấn kiểm tra thông tin đăng nhập trong bảng `quan_tri_vien`
+   $select_admin = mysqli_query($conn, "SELECT * FROM `quan_tri_vien` WHERE email = '$email' AND mat_khau = '$password'") or die('query failed');
 
-    // Kiểm tra tài khoản có tồn tại trong bảng `quan_tri_vien`
-    if (mysqli_num_rows($select_quan_tri_vien) > 0) {
-        $row = mysqli_fetch_assoc($select_quan_tri_vien);
-        $_SESSION['admin_name'] = $row['email'];
-        $_SESSION['admin_id'] = $row['id'];
-        header('location:admin_members.php'); // Chuyển đến trang admin
-        exit(); // Dừng thực thi mã sau khi chuyển hướng
+   // Kiểm tra xem người dùng có phải là quản trị viên không
+   if (mysqli_num_rows($select_admin) > 0) {
+       $row = mysqli_fetch_assoc($select_admin);
+       $_SESSION['admin_name'] = $row['email'];
+       $_SESSION['admin_id'] = $row['id'];
+       header('location:admin_patients.php'); // Chuyển đến trang admin
+       exit(); // Dừng thực thi mã sau khi chuyển hướng
 
-    } else {
-        $message[] = 'Tên tài khoản hoặc mật khẩu không chính xác!';
-    }
+   } else {
+       // Nếu không phải quản trị viên, kiểm tra trong bảng `nguoi_dung`
+       $select_user = mysqli_query($conn, "SELECT * FROM `nguoi_dung` WHERE email = '$email' AND mat_khau = '$password'") or die('query failed');
+       
+       if (mysqli_num_rows($select_user) > 0) {
+           $user = mysqli_fetch_assoc($select_user);
+           // Kiểm tra vai trò của người dùng
+           if ($user['vai_tro'] == 'benh_nhan') {
+               // Nếu là bệnh nhân
+               $_SESSION['patient_email'] = $user['email'];
+               $_SESSION['patient_id'] = $user['id'];
+               header('location:patients.php'); // Chuyển đến trang bệnh nhân
+               exit();
+           } elseif ($user['vai_tro'] == 'bac_si') {
+               // Nếu là bác sĩ
+               $_SESSION['doctor_email'] = $user['email'];
+               $_SESSION['doctor_id'] = $user['id'];
+               header('location:doctors.php'); // Chuyển đến trang bác sĩ
+               exit();
+           }
+       } else {
+           $message[] = 'Tên tài khoản hoặc mật khẩu không chính xác!';
+       }
+   }
 }
 ?>
 
