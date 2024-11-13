@@ -38,7 +38,6 @@
          <a href="home.php" class="logo"><img width="80px" height="80px" src="./image/logo-hospital.png"></a>
 
          <nav class="navbar">
-            <a href="doctors.php">Trang chủ</a>
             <a href="doctor_profile.php">Hồ sơ cá nhân</a>
             <a href="doctor_schedule.php">Quản lý lịch</a>
             <a href="doctor_view_profile.php">Quản lý bệnh nhân</a>

@@ -166,27 +166,6 @@ CREATE TABLE `quan_tri_vien` (
   `email` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
---
--- Dumping data for table `quan_tri_vien`
---
-
-INSERT INTO `quan_tri_vien` (`id`, `mat_khau`, `email`) VALUES
-(1, 'e10adc3949ba59abbe56e057f20f883e', 'admin@gmail.com');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `thanh_toan`
---
-
-CREATE TABLE `thanh_toan` (
-  `id` int(11) NOT NULL,
-  `benh_nhan_id` int(11) DEFAULT NULL,
-  `ngay_thanh_toan` datetime DEFAULT NULL,
-  `so_tien` int(100) DEFAULT NULL,
-  `phuong_thuc` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 -- --------------------------------------------------------
 
 --

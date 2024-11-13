@@ -35,7 +35,7 @@ if (isset($_POST['submit'])) { // Lấy thông tin đăng nhập từ form với
                // Nếu là bác sĩ
                $_SESSION['doctor_email'] = $user['email'];
                $_SESSION['doctor_id'] = $user['id'];
-               header('location:doctors.php'); // Chuyển đến trang bác sĩ
+               header('location:doctor_profile.php'); // Chuyển đến trang bác sĩ
                exit();
            }
        } else {

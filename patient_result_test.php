@@ -148,7 +148,10 @@ if (isset($patient_id)) {
                         <li class="list-group-item">
                             <strong>Loại xét nghiệm:</strong> <?php echo $test['loai_xet_nghiem']; ?><br>
                             <strong>Ngày thực hiện:</strong> <?php echo date("d/m/Y H:i", strtotime($test['ngay_thuc_hien'])); ?><br>
-                            <strong>Kết quả:</strong> <?php echo $test['ket_qua']; ?>
+                            <strong>Kết quả:</strong> <?php echo $test['ket_qua']; ?><br>
+                            <div class="my-4">
+                                <a href="patient_evaluate.php?doctor_id=<?php echo $test['bac_si_id']; ?>" style="font-size: 15px;" class="new-btn btn-primary view-product">Đánh giá</a>
+                            </div>
                         </li>
                     <?php } ?>
                 </ul>

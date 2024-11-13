@@ -29,10 +29,12 @@
       </div>
 
       <nav style="margin-bottom: 0px !important; min-height: unset !important;" class="navbar">
-         <a style="text-decoration: none !important;" href="admin_doctors.php">Quản lý bác sĩ</a>
-         <a style="text-decoration: none !important;" href="admin_patients.php">Quản lý bệnh nhân</a>
-         <a style="text-decoration: none !important;" href="admin_schedule.php">Quản lý lịch làm việc</a>
-         <a style="text-decoration: none !important;" href="admin_schedule.php">Quản lý thanh toán</a>
+         <a style="text-decoration: none !important;" href="admin_doctors.php">Bác sĩ</a>
+         <a style="text-decoration: none !important;" href="admin_patients.php">Bệnh nhân</a>
+         <a style="text-decoration: none !important;" href="admin_schedule.php">Phân lịch làm việc</a>
+         <a style="text-decoration: none !important;" href="admin_payment.php">Thanh toán</a>
+         <a style="text-decoration: none !important;" href="admin_evaluate.php">Đánh giá</a>
+         <a style="text-decoration: none !important;" href="admin_new.php">Tin tức</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>
