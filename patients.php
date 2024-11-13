@@ -151,7 +151,7 @@
          background-color: #f0f0f0;
       }
       .news-img {
-         width: 100px;
+         min-width: 120px;
          height: 70px;
          border-radius: 6px;
          overflow: hidden;
@@ -229,12 +229,14 @@
       ?>
          <div class="news-item">
             <div class="news-img">
-               <img src="uploaded_img/<?php echo $news['hinh_anh']; ?>" alt="News Image">
+               <img class="new-img" src="uploaded_img/<?php echo $news['hinh_anh']; ?>" alt="News Image">
             </div>
             <div class="news-details">
-               <h4><?php echo $news['tieu_de']; ?></h4>
+               <h4 style="text-align: left;"><?php echo $news['tieu_de']; ?></h4>
                <p><?php echo date("d/m/Y", strtotime($news['ngay_dang'])); ?></p>
+               <a href="patient_detail_new.php?new_id=<?php echo $news['id']; ?>" style="margin-left: 10px; font-size: 15px; width: fit-content;" class="new-btn btn-warning view-product">Xem chi tiết</a>
             </div>
+            
          </div>
       <?php
             }
