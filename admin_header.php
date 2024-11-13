@@ -35,6 +35,7 @@
          <a style="text-decoration: none !important;" href="admin_payment.php">Thanh toán</a>
          <a style="text-decoration: none !important;" href="admin_evaluate.php">Đánh giá</a>
          <a style="text-decoration: none !important;" href="admin_new.php">Tin tức</a>
+         <a style="text-decoration: none !important;" href="admin_statistical.php">Thống kê</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>

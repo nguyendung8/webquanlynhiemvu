@@ -41,6 +41,10 @@ h5 {
     font-size: 20px !important;
     color: #333;
 }
+h6 {
+    font-size: 18px;
+    color: #333;
+}
 a {
     text-decoration: none;
 }
