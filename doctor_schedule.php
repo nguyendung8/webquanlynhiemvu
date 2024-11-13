@@ -53,14 +53,15 @@ if (isset($_POST['update_appointment_status'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-   <meta charset="UTF-8">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Quản lý lịch làm việc và lịch hẹn</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-   <link rel="stylesheet" href="css/style.css">
-   <link rel="stylesheet" href="./css/new_style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lý hồ sơ bác sĩ</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="./css/new_style.css">
    <style>
       .box p {
          font-size: 17px;
@@ -130,26 +131,26 @@ if (isset($_POST['update_appointment_status'])) {
 <body>
     <?php include 'doctor_header.php'; ?>
 
-    <section class="home home-banner">
-      <div class="content">
-         <div class="slideshow-container">
-            <div class="slide fade">
-               <img src="./image/slider_1.jpg" alt="slide 1">
-            </div>
-            <div class="slide fade">
-               <img src="./image/slider_2.jpg" alt="slide 2">
-            </div>
-            <div class="slide fade">
-               <img src="./image/slider_3.jpg" alt="slide 3">
-            </div>
-            <div class="slide fade">
-               <img src="./image/slider_4.jpg" alt="slide 3">
-            </div>
+<section class="home home-banner">
+   <div class="content">
+      <div class="slideshow-container">
+         <div class="slide fade">
+            <img src="./image/slider_1.jpg" alt="slide 1">
+         </div>
+         <div class="slide fade">
+            <img src="./image/slider_2.jpg" alt="slide 2">
+         </div>
+         <div class="slide fade">
+            <img src="./image/slider_3.jpg" alt="slide 3">
+         </div>
+         <div class="slide fade">
+            <img src="./image/slider_4.jpg" alt="slide 3">
          </div>
       </div>
-   </section>
+   </div>
+</section>
 
-    <div class="container my-5">
+<div class="container my-5">
         <h2 class="text-center mb-4">Quản lý lịch làm việc và lịch hẹn</h2>
 
         <!-- Form thêm lịch làm việc -->
@@ -252,6 +253,6 @@ if (isset($_POST['update_appointment_status'])) {
 
     <script src="js/script.js"></script>
     <script src="js/slide_show.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script></body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>

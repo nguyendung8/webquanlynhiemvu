@@ -10,7 +10,13 @@
       }
    }
 ?>
-
+<style>
+   .header .flex .navbar a:hover,
+   .header .flex .icons > *:hover,
+   .header .flex .user-box p span {
+    color: #0D6EFD !important;
+}
+</style>
 
 <link rel="stylesheet" href="./css/new_style.css">
 
@@ -26,6 +32,7 @@
          <a style="text-decoration: none !important;" href="admin_doctors.php">Quản lý bác sĩ</a>
          <a style="text-decoration: none !important;" href="admin_patients.php">Quản lý bệnh nhân</a>
          <a style="text-decoration: none !important;" href="admin_schedule.php">Quản lý lịch làm việc</a>
+         <a style="text-decoration: none !important;" href="admin_schedule.php">Quản lý thanh toán</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>

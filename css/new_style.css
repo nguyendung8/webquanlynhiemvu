@@ -1,3 +1,4 @@
+
 .new-btn {
     padding: 10px 13px; 
     text-decoration: none; 
@@ -35,6 +36,10 @@ h4 {
     color: #333;
     margin-bottom: 20px;
     text-align: center;
+}
+h5 {
+    font-size: 20px !important;
+    color: #333;
 }
 a {
     text-decoration: none;

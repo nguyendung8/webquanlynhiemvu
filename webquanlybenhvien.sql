@@ -87,6 +87,7 @@ CREATE TABLE `don_thuoc` (
   `bac_si_id` int(11) DEFAULT NULL,
   `ngay_ke` datetime DEFAULT NULL,
   `danh_sach_thuoc` text DEFAULT NULL,
+  `don_gia` int(100) DEFAULT NULL,
   `ghi_chu` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 

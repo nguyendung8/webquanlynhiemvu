@@ -25,6 +25,11 @@
  .changepw-btn:hover {
     opacity: 0.7;
  }
+ .header .header-2 .flex .navbar a:hover,
+ .header .header-2 .flex .icons > *:hover,
+ .header .header-2 .flex .user-box p span {
+    color: #0D6EFD !important;
+}
 </style>
 
 <header class="header">
@@ -36,6 +41,7 @@
             <a href="patients.php">Trang chủ</a>
             <a href="patient_profile.php">Hồ sơ cá nhân</a>
             <a href="patient_schedule.php">Đặt lịch khám</a>
+            <a href="patient_result_test.php">Kết quả khám bệnh</a>
          </nav>
 
          <div class="icons">
