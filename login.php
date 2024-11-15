@@ -69,15 +69,15 @@ if (isset($_POST['submit'])) { // Lấy thông tin đăng nhập từ form với
 <body>
 
 <?php
-if (isset($message)) {
-    foreach ($message as $message) {
-        echo '
-        <div class="message">
-           <span>' . $message . '</span>
-           <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-        </div>';
+if(isset($message)){ // hiển thị thông báo sau khi thao tác với biến message được gán giá trị
+    foreach($message as $msg){
+       echo '
+       <div class="d-flex justify-content-between align-items-center alert alert-info alert-dismissible fade show" role="alert">
+          <span style="font-size: 16px;">'.$msg.'</span>
+          <i style="font-size: 20px; cursor: pointer" class="fas fa-times" onclick="this.parentElement.remove();"></i>
+       </div>';
     }
-}
+ }
 ?>
 
 <div class="form-container">
@@ -87,6 +87,7 @@ if (isset($message)) {
       <input type="password" name="password" placeholder="Mật khẩu" required class="box">
       <input type="submit" name="submit" value="Đăng nhập" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
       <br>
+      <p>Bạn chưa có tài khoản? <a style="color: blue; text-decoration: none;" href="register.php">Đăng ký</a></p>
    </form>
 </div>
 
