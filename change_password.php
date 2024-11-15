@@ -7,7 +7,7 @@
    $user_id = @$_SESSION['patient_id'] ? @$_SESSION['patient_id'] : @$_SESSION['doctor_id'];
 
    if(!isset($user_id)){ // Check if the session doesn't have user_id
-      header('location:home.php'); // Redirect to login page if session doesn't exist
+      header('location:login.php'); // Redirect to login page if session doesn't exist
       exit;
    }
 

@@ -1,4 +1,8 @@
 <?php
+include 'config.php';
+
+$patient_id = @$_SESSION['patient_id'];
+
    //nhúng vào các trang bán hàng
    if(isset($message)){ // hiển thị thông báo sau khi thao tác với biến message được gán giá trị
       foreach($message as $msg){
@@ -38,11 +42,18 @@
          <a href="home.php" class="logo"><img width="80px" height="80px" src="./image/logo-hospital.png"></a>
 
          <nav class="navbar">
-            <a href="patients.php">Trang chủ</a>
+            <a href="home.php">Trang chủ</a>
             <a href="patient_profile.php">Hồ sơ cá nhân</a>
             <a href="patient_schedule.php">Đặt lịch khám</a>
             <a href="patient_result_test.php">Kết quả khám bệnh</a>
          </nav>
+
+         <?php if (empty($patient_id)) { ?>
+            <div class="fs-2">
+               <a class="new-btn btn-primary" href="login.php">Đăng nhập</a>
+               <a class="new-btn btn-info" href="register.php">Đăng ký</a>
+            </div>
+         <?php } else  {  ?>
 
          <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -54,6 +65,7 @@
             <a href="change_password.php" class="changepw-btn">Đổi mật khẩu</a>
             <a style="margin-top: 13px;" href="logout.php" class="delete-btn">Đăng xuất</a>
          </div>
+         <?php } ?>
       </div>
    </div>
 

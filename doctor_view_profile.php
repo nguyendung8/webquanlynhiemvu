@@ -3,7 +3,7 @@ include 'config.php';
 session_start();
 
 if (!isset($_SESSION['doctor_email'])) {
-    header('location: home.php');
+    header('location: login.php');
     exit();
 }
 

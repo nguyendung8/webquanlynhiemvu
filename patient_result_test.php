@@ -4,7 +4,7 @@ session_start();
 
 // Kiểm tra xem bác sĩ đã đăng nhập chưa
 if (!isset($_SESSION['patient_id'])) {
-    header('location:home.php');
+    header('location:login.php');
     exit();
 }
 
@@ -194,7 +194,8 @@ if (isset($patient_id)) {
                                         <div class="modal-body text-center">
                                             <p><strong>Số tiền cần thanh toán:</strong> <?php echo number_format($prescription['don_gia']) . " VND"; ?></p>
                                             <p>Quét mã QR dưới đây để thanh toán:</p>
-                                            <img src="./image/qr_code.png" alt="QR Code" style="width: 200px; height: 200px;">
+                                            <img src="./image/qr.png" alt="QR Code" style="width: 230px; height: 250px;">
+                                            <p>Vui lòng ghi nội dung chuyển khoản là số điện thoại của bạn để chúng tôi kiểm tra !!!</p>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>

@@ -2,12 +2,6 @@
 include 'config.php';
 session_start();
 
-if (!isset($_SESSION['patient_id'])) {
-    header('location:home.php');
-    exit();
-}
-
-
    $news_id = $_GET['new_id']; // Lấy ID của tin tức từ URL
    $query = mysqli_query($conn, "SELECT * FROM tin_tuc WHERE id = '$news_id'") or die('Query failed');
    if(mysqli_num_rows($query) == 0) {
@@ -165,7 +159,7 @@ if (!isset($_SESSION['patient_id'])) {
    <div class="news-content">
       <?php echo nl2br($news['noi_dung']); ?>
    </div>
-   <a href="patients.php" class="back-btn">Quay lại trang chủ</a>
+   <a href="home.php" class="back-btn">Quay lại trang chủ</a>
 </div>
 
     <script src="js/script.js"></script>

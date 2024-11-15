@@ -5,7 +5,7 @@ session_start();
 $admin_id = $_SESSION['admin_id'];
 
 if (!isset($admin_id)) {
-    header('location:home.php');
+    header('location:login.php');
 }
 
 // Cập nhật trạng thái thanh toán

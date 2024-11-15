@@ -35,7 +35,7 @@
 <header class="header">
    <div class="header-2">
       <div class="flex">
-         <a href="home.php" class="logo"><img width="80px" height="80px" src="./image/logo-hospital.png"></a>
+         <a href="doctor_profile.php" class="logo"><img width="80px" height="80px" src="./image/logo-hospital.png"></a>
 
          <nav class="navbar">
             <a href="doctor_profile.php">Hồ sơ cá nhân</a>

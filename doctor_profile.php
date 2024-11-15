@@ -4,7 +4,7 @@ session_start();
 
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['doctor_id'])) {
-    header('location:home.php');
+    header('location:login.php');
     exit();
 }
 

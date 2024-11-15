@@ -1,48 +1,12 @@
 <?php
-include 'config.php';
-session_start();
 
-if (isset($_POST['submit'])) { // Lấy thông tin đăng nhập từ form với submit name='submit'
+   include 'config.php';
 
-   $email = mysqli_real_escape_string($conn, $_POST['email']);
-   $password = mysqli_real_escape_string($conn, md5($_POST['password'])); // Mã hóa mật khẩu bằng md5
+   session_start();
 
-   // Truy vấn kiểm tra thông tin đăng nhập trong bảng `quan_tri_vien`
-   $select_admin = mysqli_query($conn, "SELECT * FROM `quan_tri_vien` WHERE email = '$email' AND mat_khau = '$password'") or die('query failed');
+   $user_id = @$_SESSION['patient_id']; //tạo session người dùng thường  
 
-   // Kiểm tra xem người dùng có phải là quản trị viên không
-   if (mysqli_num_rows($select_admin) > 0) {
-       $row = mysqli_fetch_assoc($select_admin);
-       $_SESSION['admin_name'] = $row['email'];
-       $_SESSION['admin_id'] = $row['id'];
-       header('location:admin_patients.php'); // Chuyển đến trang admin
-       exit(); // Dừng thực thi mã sau khi chuyển hướng
 
-   } else {
-       // Nếu không phải quản trị viên, kiểm tra trong bảng `nguoi_dung`
-       $select_user = mysqli_query($conn, "SELECT * FROM `nguoi_dung` WHERE email = '$email' AND mat_khau = '$password'") or die('query failed');
-       
-       if (mysqli_num_rows($select_user) > 0) {
-           $user = mysqli_fetch_assoc($select_user);
-           // Kiểm tra vai trò của người dùng
-           if ($user['vai_tro'] == 'benh_nhan') {
-               // Nếu là bệnh nhân
-               $_SESSION['patient_email'] = $user['email'];
-               $_SESSION['patient_id'] = $user['id'];
-               header('location:patients.php'); // Chuyển đến trang bệnh nhân
-               exit();
-           } elseif ($user['vai_tro'] == 'bac_si') {
-               // Nếu là bác sĩ
-               $_SESSION['doctor_email'] = $user['email'];
-               $_SESSION['doctor_id'] = $user['id'];
-               header('location:doctor_profile.php'); // Chuyển đến trang bác sĩ
-               exit();
-           }
-       } else {
-           $message[] = 'Tên tài khoản hoặc mật khẩu không chính xác!';
-       }
-   }
-}
 ?>
 
 <!DOCTYPE html>
@@ -51,44 +15,236 @@ if (isset($_POST['submit'])) { // Lấy thông tin đăng nhập từ form với
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Đăng nhập</title>
+   <title>Trang chủ</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="css/style.css">
    <style>
-      .forget-btn {
-         font-size: 20px;
-         color: #9C27B0;
+      .box p {
+         font-size: 17px;
+         padding-bottom: 5px;
       }
-      .forget-btn:hover {
-         opacity: 0.8;
+      .action {
+         display: flex;
+         align-items: center;
+      }
+      .view-product {
+         margin-top: 5px;
+         padding: 5px 20px;
+         background-color: burlywood;
+         font-size: 16px;
+         color: #fff;
+         border-radius: 6px;
+      }
+      .view-product:hover {
+         opacity: 0.9;
+      }
+      .slideshow-container {
+         position: relative;
+         max-width: 800px;
+         margin: 0 auto;
+         overflow: hidden; /* Để ẩn phần ngoài khung hình ảnh */
+      }
+      .slide {
+         display: none;
+         animation: fade 2s ease-in-out infinite; /* Sử dụng animation để thêm hiệu ứng lướt sang */
+      }
+      @keyframes fade {
+         0%, 100% {
+            opacity: 0;
+         }
+         25%, 75% {
+            opacity: 1;
+         }
+      }
+      .slide img {
+         width: 100%;
+         height: 485px;
+         border-radius: 9px;
+      }
+      .borrow_book:hover { 
+         opacity: 0.9;
+      }
+      .borrow_book {
+         padding: 5px 25px;
+         background-image: linear-gradient(to right, #ff9800, #F7695D);
+         border-radius: 4px;
+         cursor: pointer;
+         font-size: 20px;
+         color: #fff;
+         font-weight: 700;
+      }
+      .home-banner {
+         min-height: 70vh;
+         background:linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.1)), url(./image/home_background.png) no-repeat;
+         background-size: cover;
+         background-position: center;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+      }
+      .title {
+         font-size: 30px;
+         color: #00695c;
+         text-align: center;
+         margin: 20px 0;
+         font-weight: bold;
+      }
+
+      /* Phong cách cho box dịch vụ */
+      .service-container {
+         display: flex;
+         justify-content: center;
+         gap: 40px;
+         padding: 20px 0;
+      }
+      .service-box {
+         width: 300px;
+         padding: 20px;
+         border: 1px solid #ddd;
+         border-radius: 8px;
+         text-align: center;
+         background-color: #fff;
+         transition: all 0.3s ease;
+         box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+      }
+      .service-box:hover {
+         transform: translateY(-5px);
+         box-shadow: 0px 6px 12px rgba(0,0,0,0.15);
+      }
+      .service-box i {
+         font-size: 50px;
+         color: #009688;
+         margin-bottom: 15px;
+      }
+      .service-box a {
+         font-size: 18px;
+         font-weight: bold;
+         color: #333;
+         text-decoration: none;
+         display: block;
+         margin-top: 10px;
+      }
+      .service-box a:hover {
+         color: #009688;
+      }
+
+      /* Phong cách cho danh sách tin tức */
+      .news-container {
+         max-width: 900px;
+         margin: 0 auto;
+         padding: 20px 0;
+      }
+      .news-item {
+         display: flex;
+         gap: 15px;
+         padding: 15px;
+         border-bottom: 1px solid #ddd;
+         transition: all 0.3s ease;
+         align-items: center;
+      }
+      .news-item:hover {
+         background-color: #f0f0f0;
+      }
+      .news-img {
+         min-width: 120px;
+         height: 70px;
+         border-radius: 6px;
+         overflow: hidden;
+      }
+      .news-img img {
+         width: 100%;
+         height: 100%;
+         object-fit: cover;
+      }
+      .news-details {
+         display: flex;
+         flex-direction: column;
+      }
+      .news-details h4 {
+         font-size: 18px;
+         margin: 0;
+         font-weight: bold;
+         color: #333;
+      }
+      .news-details p {
+         font-size: 14px;
+         color: #666;
+         margin: 5px 0 0;
       }
    </style>
 </head>
 <body>
+   
+<?php include 'patient_header.php'; ?>
 
-<?php
-if (isset($message)) {
-    foreach ($message as $message) {
-        echo '
-        <div class="message">
-           <span>' . $message . '</span>
-           <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
-        </div>';
-    }
-}
-?>
+<section class="home home-banner">
 
-<div class="form-container">
-   <form action="" method="post">
-      <h3>Đăng nhập</h3>
-      <input type="email" name="email" placeholder="Nhập tên tài khoản" required class="box">
-      <input type="password" name="password" placeholder="Mật khẩu" required class="box">
-      <input type="submit" name="submit" value="Đăng nhập" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
-      <br>
-   </form>
-</div>
+<div class="content">
+      <div class="slideshow-container">
+         <div class="slide fade">
+            <img src="./image/slider_1.jpg" alt="slide 1">
+         </div>
+         <div class="slide fade">
+            <img src="./image/slider_2.jpg" alt="slide 2">
+         </div>
+         <div class="slide fade">
+            <img src="./image/slider_3.jpg" alt="slide 3">
+         </div>
+         <div class="slide fade">
+            <img src="./image/slider_4.jpg" alt="slide 3">
+         </div>
+      </div>
+   </div>
+
+</section>
+
+<section class="home-service">
+   <h1 class="title">Dịch Vụ Trực Tuyến</h1>
+
+   <div class="service-container">
+      <div class="service-box">
+         <i class="fas fa-calendar-check"></i>
+         <a href="./patient_schedule.php">Đặt lịch hẹn khám bệnh</a>
+      </div>
+      <div class="service-box">
+         <i class="fas fa-search"></i>
+         <a href="./patient_result_test.php">Tra cứu kết quả xét nghiệm</a>
+      </div>
+   </div>
+</section>
+
+<section class="news">
+   <h1 class="title">Tin Tức Mới Nhất</h1>
+   
+   <div class="news-container">
+      <?php
+         $news_query = mysqli_query($conn, "SELECT * FROM `tin_tuc` ORDER BY ngay_dang DESC LIMIT 5") or die('query failed');
+         if(mysqli_num_rows($news_query) > 0){
+            while($news = mysqli_fetch_assoc($news_query)){
+      ?>
+         <div class="news-item">
+            <div class="news-img">
+               <img class="new-img" src="uploaded_img/<?php echo $news['hinh_anh']; ?>" alt="News Image">
+            </div>
+            <div class="news-details">
+               <h4 style="text-align: left;"><?php echo $news['tieu_de']; ?></h4>
+               <p><?php echo date("d/m/Y", strtotime($news['ngay_dang'])); ?></p>
+               <a href="patient_detail_new.php?new_id=<?php echo $news['id']; ?>" style="margin-left: 10px; font-size: 15px; width: fit-content;" class="new-btn btn-warning view-product">Xem chi tiết</a>
+            </div>
+            
+         </div>
+      <?php
+            }
+         } else {
+            echo '<p class="text-center">Chưa có tin tức nào.</p>';
+         }
+      ?>
+   </div>
+</section>
+
+<script src="js/script.js"></script>
+<script src="js/slide_show.js"></script>
 
 </body>
 </html>
