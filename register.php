@@ -2,30 +2,23 @@
 include 'config.php';
 
 if (isset($_POST['submit'])) {
-    $ten = mysqli_real_escape_string($conn, $_POST['ten']);
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
     $email = mysqli_real_escape_string($conn, $_POST['email']);
-    $mat_khau = mysqli_real_escape_string($conn, md5($_POST['mat_khau']));
-    $cmat_khau = mysqli_real_escape_string($conn, md5($_POST['cmat_khau']));
-    $vai_tro = 'benh_nhan';
+    $password = mysqli_real_escape_string($conn, md5($_POST['password']));
+    $confirm_password = mysqli_real_escape_string($conn, md5($_POST['confirm_password']));
+    $role = 'student';
 
-    // Check if email already exists
-    $select_user = mysqli_query($conn, "SELECT * FROM `nguoi_dung` WHERE email = '$email'") or die('Query failed');
+    // Kiểm tra email đã tồn tại chưa
+    $select_user = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
 
     if (mysqli_num_rows($select_user) > 0) {
         $message[] = 'Email đã tồn tại!';
     } else {
-        if ($mat_khau != $cmat_khau) {
+        if ($password != $confirm_password) {
             $message[] = 'Mật khẩu không khớp!';
         } else {
-            // Insert into nguoi_dung table
-            mysqli_query($conn, "INSERT INTO `nguoi_dung` (ten, mat_khau, vai_tro, email) VALUES('$ten', '$mat_khau', '$vai_tro', '$email')") or die('Query failed');
-
-            // Get the last inserted user ID
-            $last_id = mysqli_insert_id($conn);
-
-            // Insert into benh_nhan table
-            mysqli_query($conn, "INSERT INTO `benh_nhan` (id) VALUES('$last_id')") or die('Query failed');
-
+            // Thêm tài khoản vào bảng `users`
+            mysqli_query($conn, "INSERT INTO `users` (name, email, password, role) VALUES('$name', '$email', '$password', '$role')") or die('Query failed');
             $message[] = 'Đăng ký thành công!';
             header('location:login.php');
         }
@@ -62,10 +55,10 @@ if (isset($message)) {
 <div class="form-container">
     <form action="" method="post">
         <h3>Đăng ký</h3>
-        <input type="text" name="ten" placeholder="Nhập họ tên" required class="box">
+        <input type="text" name="name" placeholder="Nhập họ tên" required class="box">
         <input type="email" name="email" placeholder="Nhập email" required class="box">
-        <input type="password" name="mat_khau" placeholder="Nhập mật khẩu" required class="box">
-        <input type="password" name="cmat_khau" placeholder="Nhập lại mật khẩu" required class="box">
+        <input type="password" name="password" placeholder="Nhập mật khẩu" required class="box">
+        <input type="password" name="confirm_password" placeholder="Nhập lại mật khẩu" required class="box">
         <input type="submit" name="submit" value="Đăng ký ngay" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
         <p>Bạn đã có tài khoản? <a style="color: blue; text-decoration: none;" href="login.php">Đăng nhập</a></p>
     </form>

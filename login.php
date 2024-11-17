@@ -2,45 +2,39 @@
 include 'config.php';
 session_start();
 
-if (isset($_POST['submit'])) { // Lấy thông tin đăng nhập từ form với submit name='submit'
-
+if (isset($_POST['submit'])) { // Xử lý khi người dùng nhấn nút "submit"
    $email = mysqli_real_escape_string($conn, $_POST['email']);
    $password = mysqli_real_escape_string($conn, md5($_POST['password'])); // Mã hóa mật khẩu bằng md5
 
-   // Truy vấn kiểm tra thông tin đăng nhập trong bảng `quan_tri_vien`
-   $select_admin = mysqli_query($conn, "SELECT * FROM `quan_tri_vien` WHERE email = '$email' AND mat_khau = '$password'") or die('query failed');
+   // Truy vấn kiểm tra thông tin đăng nhập
+   $query = "SELECT * FROM `users` WHERE email = '$email' AND password = '$password'";
+   $result = mysqli_query($conn, $query) or die('Query failed');
 
-   // Kiểm tra xem người dùng có phải là quản trị viên không
-   if (mysqli_num_rows($select_admin) > 0) {
-       $row = mysqli_fetch_assoc($select_admin);
-       $_SESSION['admin_name'] = $row['email'];
-       $_SESSION['admin_id'] = $row['id'];
-       header('location:admin_patients.php'); // Chuyển đến trang admin
-       exit(); // Dừng thực thi mã sau khi chuyển hướng
+   // Kiểm tra kết quả truy vấn
+   if (mysqli_num_rows($result) > 0) {
+       $user = mysqli_fetch_assoc($result);
 
-   } else {
-       // Nếu không phải quản trị viên, kiểm tra trong bảng `nguoi_dung`
-       $select_user = mysqli_query($conn, "SELECT * FROM `nguoi_dung` WHERE email = '$email' AND mat_khau = '$password'") or die('query failed');
-       
-       if (mysqli_num_rows($select_user) > 0) {
-           $user = mysqli_fetch_assoc($select_user);
-           // Kiểm tra vai trò của người dùng
-           if ($user['vai_tro'] == 'benh_nhan') {
-               // Nếu là bệnh nhân
-               $_SESSION['patient_email'] = $user['email'];
-               $_SESSION['patient_id'] = $user['id'];
-               header('location:home.php'); // Chuyển đến trang bệnh nhân
-               exit();
-           } elseif ($user['vai_tro'] == 'bac_si') {
-               // Nếu là bác sĩ
-               $_SESSION['doctor_email'] = $user['email'];
-               $_SESSION['doctor_id'] = $user['id'];
-               header('location:doctor_profile.php'); // Chuyển đến trang bác sĩ
-               exit();
-           }
-       } else {
-           $message[] = 'Tên tài khoản hoặc mật khẩu không chính xác!';
+       if ($user['role'] == 'admin') {
+           // Nếu là quản trị viên
+           $_SESSION['admin_name'] = $user['name'];
+           $_SESSION['admin_id'] = $user['id'];
+           header('Location: admin_accounts.php'); // Chuyển đến trang quản trị
+           exit();
+       } elseif ($user['role'] == 'teacher') {
+           // Nếu là giảng viên
+             $_SESSION['teacher_name'] = $user['name'];
+             $_SESSION['teacher_id'] = $user['id'];
+           header('Location: teacher_dashboard.php'); // Chuyển đến trang giảng viên
+           exit();
+       } elseif ($user['role'] == 'student') {
+           // Nếu là sinh viên
+            $_SESSION['student_name'] = $user['name'];
+            $_SESSION['student_id'] = $user['id'];
+           header('Location: home.php'); // Chuyển đến trang sinh viên
+           exit();
        }
+   } else {
+       $message[] = 'Tên tài khoản hoặc mật khẩu không chính xác!';
    }
 }
 ?>
@@ -69,21 +63,21 @@ if (isset($_POST['submit'])) { // Lấy thông tin đăng nhập từ form với
 <body>
 
 <?php
-if(isset($message)){ // hiển thị thông báo sau khi thao tác với biến message được gán giá trị
-    foreach($message as $msg){
-       echo '
-       <div class="d-flex justify-content-between align-items-center alert alert-info alert-dismissible fade show" role="alert">
-          <span style="font-size: 16px;">'.$msg.'</span>
-          <i style="font-size: 20px; cursor: pointer" class="fas fa-times" onclick="this.parentElement.remove();"></i>
-       </div>';
+if (isset($message)) { // Hiển thị thông báo nếu có lỗi
+    foreach ($message as $msg) {
+        echo '
+        <div class="d-flex justify-content-between align-items-center alert alert-info alert-dismissible fade show" role="alert">
+            <span style="font-size: 16px;">' . $msg . '</span>
+            <i style="font-size: 20px; cursor: pointer" class="fas fa-times" onclick="this.parentElement.remove();"></i>
+        </div>';
     }
- }
+}
 ?>
 
 <div class="form-container">
    <form action="" method="post">
       <h3>Đăng nhập</h3>
-      <input type="email" name="email" placeholder="Nhập tên tài khoản" required class="box">
+      <input type="email" name="email" placeholder="Nhập email" required class="box">
       <input type="password" name="password" placeholder="Mật khẩu" required class="box">
       <input type="submit" name="submit" value="Đăng nhập" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
       <br>

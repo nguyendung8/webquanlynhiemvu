@@ -25,17 +25,12 @@
    <div class="flex" style="padding: 10px 0 !important;">
 
       <div class="logo">
-         <img width="70px" src="./image/logo-hospital.png" alt="">
+         <img width="90px" src="./image/logo_course.png" alt="">
       </div>
 
       <nav style="margin-bottom: 0px !important; min-height: unset !important;" class="navbar">
-         <a style="text-decoration: none !important;" href="admin_doctors.php">Bác sĩ</a>
-         <a style="text-decoration: none !important;" href="admin_patients.php">Bệnh nhân</a>
-         <a style="text-decoration: none !important;" href="admin_schedule.php">Phân lịch làm việc</a>
-         <a style="text-decoration: none !important;" href="admin_payment.php">Thanh toán</a>
-         <a style="text-decoration: none !important;" href="admin_evaluate.php">Đánh giá</a>
-         <a style="text-decoration: none !important;" href="admin_new.php">Tin tức</a>
-         <a style="text-decoration: none !important;" href="admin_statistical.php">Thống kê</a>
+         <a style="text-decoration: none !important;" href="admin_accounts.php">Giảng viên</a>
+         <a style="text-decoration: none !important;" href="admin_categories.php">Danh mục khóa học</a>
       </nav>
 
       <a style="text-decoration: none" href="logout.php" class="delete-btn">Đăng xuất</a>
