@@ -2,15 +2,15 @@
 include 'config.php';
 session_start();
 
-if (!isset($_SESSION['student_id'])) {
+if (!isset($_SESSION['teacher_id'])) {
     header('location:login.php');
     exit();
 }
 
-$student_id = $_SESSION['student_id'];
+$teacher_id = $_SESSION['teacher_id'];
 
 // Lấy thông tin người dùng từ cơ sở dữ liệu
-$query = "SELECT * FROM users WHERE id = '$student_id' LIMIT 1";
+$query = "SELECT * FROM users WHERE id = '$teacher_id' LIMIT 1";
 $result = mysqli_query($conn, $query);
 
 if (mysqli_num_rows($result) > 0) {
@@ -38,7 +38,7 @@ if (isset($_POST['update'])) {
     mysqli_query($conn, $update_query);
 
     $message[] = 'Cập nhật thông tin thành công!';
-    header('location:student_profile.php');
+    header('location:teacher_profile.php');
     exit();
 }
 ?>
@@ -49,13 +49,14 @@ if (isset($_POST['update'])) {
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
    <title>Quản lý hồ sơ cá nhân</title>
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   <link rel="stylesheet" href="css/style.css">
-   <link rel="stylesheet" href="css/new-style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/admin_style.css">
+    <link rel="stylesheet" href="css/new_style.css">
 </head>
 <body>
-<?php include 'student_header.php'; ?>
+<?php include 'teacher_header.php'; ?>
 
     <div class="container my-5">
         <h2 class="text-center mb-4">Quản lý hồ sơ cá nhân</h2>
@@ -90,9 +91,8 @@ if (isset($_POST['update'])) {
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="js/script.js"></script>
-<script src="js/slide_show.js"></script>
-<script></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/slide_show.js"></script>
 </body>
 </html>

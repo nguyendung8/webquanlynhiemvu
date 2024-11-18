@@ -82,7 +82,7 @@
 </head>
 <body>
    
-<?php include 'student_header.php'; ?>
+<?php include 'teacher_header.php'; ?>
 <div class="change-password">
     <h1 class="cp-title">Đổi mật khẩu</h1>
     <form method="POST">

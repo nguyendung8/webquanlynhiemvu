@@ -1,7 +1,7 @@
 <?php
 include 'config.php';
 
-$student_id = @$_SESSION['student_id'];
+$teacher_id = @$_SESSION['teacher_id'];
 
    //nhúng vào các trang bán hàng
    if(isset($message)){ // hiển thị thông báo sau khi thao tác với biến message được gán giá trị
@@ -16,6 +16,7 @@ $student_id = @$_SESSION['student_id'];
 ?>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="./css/style.css">
 <link rel="stylesheet" href="./css/new_style.css">
 
 <style>
@@ -197,16 +198,9 @@ $student_id = @$_SESSION['student_id'];
          <a href="home.php" class="logo"><img width="80px" height="80px" src="./image/logo_course.png"></a>
 
          <nav class="navbar">
-            <a href="home.php">Trang chủ</a>
-            <a href="student_profile.php">Hồ sơ cá nhân</a>
+            <a href="teacher_courses.php">Khóa học</a>
+            <a href="teacher_profile.php">Hồ sơ cá nhân</a>
             </nav>
-
-         <?php if (empty($student_id)) { ?>
-            <div class="fs-2">
-               <a class="new-btn btn-primary" href="login.php">Đăng nhập</a>
-               <a class="new-btn btn-info" href="register.php">Đăng ký</a>
-            </div>
-         <?php } else  {  ?>
 
          <div class="icons">
             <div id="menu-btn" class="fas fa-bars"></div>
@@ -214,11 +208,10 @@ $student_id = @$_SESSION['student_id'];
          </div>
 
          <div class="user-box" style="z-index: 100;">
-            <p>Name : <span><?php echo $_SESSION['student_name']; ?></span></p>
-            <a href="change_password.php" class="changepw-btn">Đổi mật khẩu</a>
+            <p>Name : <span><?php echo $_SESSION['teacher_name']; ?></span></p>
+            <a href="change_password_teacher.php" class="changepw-btn">Đổi mật khẩu</a>
             <a style="margin-top: 13px;" href="logout.php" class="delete-btn">Đăng xuất</a>
          </div>
-         <?php } ?>
       </div>
    </div>
 
@@ -250,3 +243,4 @@ $student_id = @$_SESSION['student_id'];
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./js/script.js"></script>
