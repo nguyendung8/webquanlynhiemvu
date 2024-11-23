@@ -14,25 +14,11 @@ if (isset($_POST['submit'])) { // Xử lý khi người dùng nhấn nút "submi
    if (mysqli_num_rows($result) > 0) {
        $user = mysqli_fetch_assoc($result);
 
-       if ($user['role'] == 'admin') {
-           // Nếu là quản trị viên
-           $_SESSION['admin_name'] = $user['name'];
-           $_SESSION['admin_id'] = $user['id'];
-           header('Location: admin_accounts.php'); // Chuyển đến trang quản trị
-           exit();
-       } elseif ($user['role'] == 'teacher') {
-           // Nếu là giảng viên
-             $_SESSION['teacher_name'] = $user['name'];
-             $_SESSION['teacher_id'] = $user['id'];
-           header('Location: teacher_courses.php'); // Chuyển đến trang giảng viên
-           exit();
-       } elseif ($user['role'] == 'student') {
-           // Nếu là sinh viên
-            $_SESSION['student_name'] = $user['name'];
-            $_SESSION['student_id'] = $user['id'];
-           header('Location: home.php'); // Chuyển đến trang sinh viên
-           exit();
-       }
+       $_SESSION['user_name'] = $user['name'];
+       $_SESSION['user_id'] = $user['user_id'];
+
+       header('Location: home.php'); // Chuyển đến trang chính
+       exit();
    } else {
        $message[] = 'Tên tài khoản hoặc mật khẩu không chính xác!';
    }
@@ -87,3 +73,4 @@ if (isset($message)) { // Hiển thị thông báo nếu có lỗi
 
 </body>
 </html>
+

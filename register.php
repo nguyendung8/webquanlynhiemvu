@@ -6,7 +6,6 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['email']);
     $password = mysqli_real_escape_string($conn, md5($_POST['password']));
     $confirm_password = mysqli_real_escape_string($conn, md5($_POST['confirm_password']));
-    $role = 'student';
 
     // Kiểm tra email đã tồn tại chưa
     $select_user = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('Query failed');
@@ -18,14 +17,13 @@ if (isset($_POST['submit'])) {
             $message[] = 'Mật khẩu không khớp!';
         } else {
             // Thêm tài khoản vào bảng `users`
-            mysqli_query($conn, "INSERT INTO `users` (name, email, password, role) VALUES('$name', '$email', '$password', '$role')") or die('Query failed');
+            mysqli_query($conn, "INSERT INTO `users` (name, email, password, created_at) VALUES('$name', '$email', '$password', NOW())") or die('Query failed');
             $message[] = 'Đăng ký thành công!';
             header('location:login.php');
         }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
