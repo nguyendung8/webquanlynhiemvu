@@ -69,6 +69,24 @@ if (isset($_POST['update_task'])) {
         $message[] = 'Cập nhật nhiệm vụ thất bại!';
     }
 }
+if (isset($_POST['share_task'])) {
+    $task_id = mysqli_real_escape_string($conn, $_POST['task_id']);
+    $shared_with_user_id = mysqli_real_escape_string($conn, $_POST['shared_with_user_id']);
+
+    // Kiểm tra xem nhiệm vụ đã được chia sẻ với người dùng này chưa
+    $check_collaboration = mysqli_query($conn, "SELECT * FROM `collaborations` WHERE task_id = '$task_id' AND shared_with_user_id = '$shared_with_user_id'") or die('Query failed');
+    if (mysqli_num_rows($check_collaboration) > 0) {
+        $message[] = 'Nhiệm vụ đã được chia sẻ với người dùng này!';
+    } else {
+        // Thêm bản ghi chia sẻ vào bảng collaborations
+        $insert_collaboration = mysqli_query($conn, "INSERT INTO `collaborations` (task_id, shared_with_user_id) VALUES ('$task_id', '$shared_with_user_id')") or die('Query failed');
+        if ($insert_collaboration) {
+            $message[] = 'Chia sẻ nhiệm vụ thành công!';
+        } else {
+            $message[] = 'Chia sẻ nhiệm vụ thất bại!';
+        }
+    }
+}
 ?>
 
 
@@ -162,7 +180,7 @@ if (isset($_POST['update_task'])) {
             </thead>
             <tbody>
                 <?php
-                $select_tasks = mysqli_query($conn, "SELECT * FROM `tasks`") or die('Query failed');
+                $select_tasks = mysqli_query($conn, "SELECT * FROM `tasks` Where user_id = $user_id") or die('Query failed');
                 if (mysqli_num_rows($select_tasks) > 0) {
                     while ($task = mysqli_fetch_assoc($select_tasks)) {
                 ?>
@@ -174,10 +192,43 @@ if (isset($_POST['update_task'])) {
                             <td><?php echo $task['priority']; ?></td>
                             <td><?php echo $task['status']; ?></td>
                             <td>
-                                <button type="button" class="fs-3 btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateTaskModal<?php echo $task['task_id']; ?>">Sửa</button>
-                                <a href="home.php?delete=<?php echo $task['task_id']; ?>" class="fs-2 btn-danger btn-sm" onclick="return confirm('Xóa nhiệm vụ này?');">Xóa</a>
+                                <button type="button" class="fs-3 btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#shareTaskModal<?php echo $task['task_id']; ?>">Chia sẻ</button>
+                                <button type="button" class="fs-4 btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateTaskModal<?php echo $task['task_id']; ?>">Sửa</button>
+                                <a href="home.php?delete=<?php echo $task['task_id']; ?>" class="fs-3 btn-danger btn-sm" onclick="return confirm('Xóa nhiệm vụ này?');">Xóa</a>
                             </td>
                         </tr>
+
+                        <!-- Modal chia sẻ -->
+                        <div class="modal fade" id="shareTaskModal<?php echo $task['task_id']; ?>" tabindex="-1" aria-labelledby="shareTaskModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <form action="" method="post">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="shareTaskModalLabel">Chia sẻ nhiệm vụ</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+                                            <label for="shared_with_user_id">Chọn người dùng:</label>
+                                            <select name="shared_with_user_id" class="form-control" required>
+                                                <option value="">Chọn...</option>
+                                                <?php
+                                                // Lấy danh sách người dùng khác để chia sẻ
+                                                $users_query = mysqli_query($conn, "SELECT * FROM `users` WHERE user_id != '$user_id'") or die('Query failed');
+                                                while ($user = mysqli_fetch_assoc($users_query)) {
+                                                    echo "<option value='{$user['user_id']}'>{$user['name']} ({$user['email']})</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="new-btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                            <input type="submit" name="share_task" value="Chia sẻ" class="new-btn btn-info">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
 
                         <!-- Modal chỉnh sửa -->
                         <div class="modal fade" id="updateTaskModal<?php echo $task['task_id']; ?>" tabindex="-1" aria-labelledby="updateTaskModalLabel" aria-hidden="true">

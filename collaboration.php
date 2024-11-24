@@ -20,12 +20,18 @@ if (isset($_POST['update_status'])) {
 $filter_priority = isset($_GET['priority']) ? $_GET['priority'] : '';
 $filter_label = isset($_GET['label']) ? $_GET['label'] : '';
 
-$query = "SELECT * FROM `tasks` WHERE user_id = '$user_id'";
+$query = "
+    SELECT tasks.* 
+    FROM `tasks`
+    INNER JOIN `collaborations` ON tasks.task_id = collaborations.task_id
+    WHERE collaborations.shared_with_user_id = '$user_id'
+";
+
 if ($filter_priority) {
-    $query .= " AND priority = '$filter_priority'";
+    $query .= " AND tasks.priority = '$filter_priority'";
 }
 if ($filter_label) {
-    $query .= " AND label = '$filter_label'";
+    $query .= " AND tasks.label = '$filter_label'";
 }
 
 $tasks = mysqli_query($conn, $query) or die('Query failed');
@@ -38,7 +44,7 @@ $tasks = mysqli_query($conn, $query) or die('Query failed');
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Quản lý tiến độ</title>
+   <title>Quản lý nhiệm vụ cộng tác</title>
 
    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -114,7 +120,7 @@ $tasks = mysqli_query($conn, $query) or die('Query failed');
 <?php include 'header.php'; ?>
 
 <section class="manage-tasks container mt-4">
-    <h1 class="text-center mb-4 fs-1">Quản lý Danh Sách Nhiệm Vụ Của Tôi</h1>
+    <h1 class="text-center mb-4 fs-1">Quản lý Danh Sách Việc Cộng Tác Với Người Khác</h1>
 
     <!-- Bộ lọc -->
     <form action="" method="get" style="gap: 30px;" class="d-flex mb-3 justify-content-end align-item-center">

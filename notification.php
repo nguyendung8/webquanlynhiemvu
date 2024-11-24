@@ -92,12 +92,15 @@ $unread_count = mysqli_fetch_assoc($unread_count_query)['unread_count'];
         .notification-item {
             padding: 15px;
             border-bottom: 1px solid #eaeaea;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 5px;
         }
         .notification-item:last-child {
             border-bottom: none;
         }
         .notification-item.unread {
-            background-color: #f9f9f9;
+            background-color: #ffcd00;
         }
         .notification-item h5 {
             margin: 0;

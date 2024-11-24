@@ -39,6 +39,9 @@ $student_id = @$_SESSION['student_id'];
 </style>
 
 <style>
+   * {
+      font-family: system-ui;
+   }
    .box p {
       font-size: 17px;
       padding-bottom: 5px;
@@ -200,10 +203,12 @@ $student_id = @$_SESSION['student_id'];
 
          <nav class="navbar">
             <a href="home.php">Nhiệm vụ</a>
-            <a href="todo_list.php">Danh sách việc cần làm</a>
+            <a href="todo_list.php">Quản lý tiến độ</a>
             <a href="schedule.php">Lịch</a>
+            <a href="collaboration.php">Cộng tác</a>
             <a href="event.php">Sự kiện</a>
             <a href="notification.php">Thông báo</a>
+            <a href="statistical.php">Thống kê</a>
          </nav>
 
          <div class="icons">
