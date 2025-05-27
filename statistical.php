@@ -78,13 +78,19 @@ while ($row = mysqli_fetch_assoc($completion_trend_query)) {
             width: 600px !important;
             height: 600px !important;
         }
+        #priorityChart,
+        #completionTrendChart {
+            margin: auto;
+            width: 80% !important;
+            height: 550px !important;
+        }
    </style>
 </head>
 <body>
 
 <?php include 'header.php'; ?>
 
-<div class="container mt-4">
+<div class="container mt-4 mb-5">
     <h1 class="text-center mb-4">Thống kê Nhiệm vụ</h1>
     
     <!-- Thống kê tổng quan -->

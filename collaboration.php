@@ -25,6 +25,8 @@ $query = "
     FROM `tasks`
     INNER JOIN `collaborations` ON tasks.task_id = collaborations.task_id
     WHERE collaborations.shared_with_user_id = '$user_id'
+    AND tasks.acceptance_status = 'Đã chấp nhận'
+    AND collaborations.is_accept = '1'
 ";
 
 if ($filter_priority) {

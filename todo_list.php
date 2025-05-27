@@ -20,7 +20,7 @@ if (isset($_POST['update_status'])) {
 $filter_priority = isset($_GET['priority']) ? $_GET['priority'] : '';
 $filter_label = isset($_GET['label']) ? $_GET['label'] : '';
 
-$query = "SELECT * FROM `tasks` WHERE user_id = '$user_id'";
+$query = "SELECT * FROM `tasks` WHERE user_id = '$user_id' and acceptance_status = 'Đã chấp nhận'";
 if ($filter_priority) {
     $query .= " AND priority = '$filter_priority'";
 }

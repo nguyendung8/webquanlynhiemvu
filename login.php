@@ -1,28 +1,42 @@
 <?php
-include 'config.php';
-session_start();
 
-if (isset($_POST['submit'])) { // Xử lý khi người dùng nhấn nút "submit"
-   $email = mysqli_real_escape_string($conn, $_POST['email']);
-   $password = mysqli_real_escape_string($conn, md5($_POST['password'])); // Mã hóa mật khẩu bằng md5
+   include 'config.php';
+   session_start();
 
-   // Truy vấn kiểm tra thông tin đăng nhập
-   $query = "SELECT * FROM `users` WHERE email = '$email' AND password = '$password'";
-   $result = mysqli_query($conn, $query) or die('Query failed');
+   if(isset($_POST['submit'])){//lấy thông tin đăng nhập từ form submit name='submit'
 
-   // Kiểm tra kết quả truy vấn
-   if (mysqli_num_rows($result) > 0) {
-       $user = mysqli_fetch_assoc($result);
+      $email = mysqli_real_escape_string($conn, $_POST['email']);
+      $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
 
-       $_SESSION['user_name'] = $user['name'];
-       $_SESSION['user_id'] = $user['user_id'];
+      $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email' AND password = '$pass'") or die('query failed');
 
-       header('Location: home.php'); // Chuyển đến trang chính
-       exit();
-   } else {
-       $message[] = 'Tên tài khoản hoặc mật khẩu không chính xác!';
+
+      if(mysqli_num_rows($select_users) > 0){//kiểm tra tài khoản có tồn tại không
+
+         $row = mysqli_fetch_assoc($select_users);
+         //kiểm tra quyền của tài khoản và đưa đến trang tương ứng
+         if($row['user_type'] == 'admin'){
+
+            $_SESSION['admin_name'] = $row['name'];
+            $_SESSION['admin_email'] = $row['email'];
+            $_SESSION['admin_id'] = $row['user_id'];
+            header('location:admin_page.php');
+
+         }elseif($row['user_type'] == 'user'){
+
+            $_SESSION['user_name'] = $row['name'];
+            $_SESSION['user_email'] = $row['email'];
+            $_SESSION['user_id'] = $row['user_id'];
+            header('location:home.php');
+
+         }
+
+      }else{
+         $message[] = 'Email hoặc mật khẩu không chính xác!';
+      }
+
    }
-}
+
 ?>
 
 <!DOCTYPE html>
@@ -34,7 +48,6 @@ if (isset($_POST['submit'])) { // Xử lý khi người dùng nhấn nút "submi
    <title>Đăng nhập</title>
 
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
    <link rel="stylesheet" href="css/style.css">
    <style>
       .forget-btn {
@@ -49,28 +62,30 @@ if (isset($_POST['submit'])) { // Xử lý khi người dùng nhấn nút "submi
 <body>
 
 <?php
-if (isset($message)) { // Hiển thị thông báo nếu có lỗi
-    foreach ($message as $msg) {
-        echo '
-        <div class="d-flex justify-content-between align-items-center alert alert-info alert-dismissible fade show" role="alert">
-            <span style="font-size: 16px;">' . $msg . '</span>
-            <i style="font-size: 20px; cursor: pointer" class="fas fa-times" onclick="this.parentElement.remove();"></i>
-        </div>';
-    }
+
+if(isset($message)){
+   foreach($message as $message){
+      echo '
+      <div class="message">
+         <span>'.$message.'</span>
+         <i class="fas fa-times" onclick="this.parentElement.remove();"></i>
+      </div>';
+   }
 }
 ?>
-
+   
 <div class="form-container">
+
    <form action="" method="post">
       <h3>Đăng nhập</h3>
-      <input type="email" name="email" placeholder="Nhập email" required class="box">
+      <input type="email" name="email" placeholder="Email" required class="box">
       <input type="password" name="password" placeholder="Mật khẩu" required class="box">
-      <input type="submit" name="submit" value="Đăng nhập" style="padding: 10px 13px; text-decoration: none; font-size: 18px; margin-bottom: 7px; border-radius: 4px;" class="btn-primary">
+      <input style="margin-bottom: 7px;" type="submit" name="submit" value="Đăng nhập" class="btn">
       <br>
-      <p>Bạn chưa có tài khoản? <a style="color: blue; text-decoration: none;" href="register.php">Đăng ký</a></p>
+      <p>Bạn chưa có tài khoản? <a href="register.php">Đăng ký</a></p>
    </form>
+
 </div>
 
 </body>
 </html>
-

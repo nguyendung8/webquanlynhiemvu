@@ -8,67 +8,6 @@ if (!isset($user_id)) {
     header('location:login.php');
 }
 
-// Thêm nhiệm vụ
-if (isset($_POST['add_task'])) {
-    $title = mysqli_real_escape_string($conn, $_POST['title']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $start_date = date('Y-m-d H:i:s');
-    $end_date = mysqli_real_escape_string($conn, $_POST['end_date']);
-    $estimated_time = mysqli_real_escape_string($conn, $_POST['estimated_time']);
-    $priority = mysqli_real_escape_string($conn, $_POST['priority']);
-    $label = mysqli_real_escape_string($conn, $_POST['label']);
-    $notes = mysqli_real_escape_string($conn, $_POST['notes']);
-    $status = 'Chưa bắt đầu';
-
-    $insert_task = mysqli_query($conn, "INSERT INTO `tasks` 
-        (title, description, start_date, end_date, estimated_time, priority, label, notes, status, user_id) 
-        VALUES 
-        ('$title', '$description', '$start_date', '$end_date', '$estimated_time', '$priority', '$label', '$notes', '$status', '$user_id')") 
-        or die('Query failed');
-
-    if ($insert_task) {
-        $message[] = 'Thêm nhiệm vụ thành công!';
-    } else {
-        $message[] = 'Thêm nhiệm vụ thất bại!';
-    }
-}
-
-// Xóa nhiệm vụ
-if (isset($_GET['delete'])) {
-    $delete_id = $_GET['delete'];
-
-    $delete_task = mysqli_query($conn, "DELETE FROM `tasks` WHERE task_id = '$delete_id'") or die('Query failed');
-    if ($delete_task) {
-        $message[] = 'Xóa nhiệm vụ thành công!';
-    } else {
-        $message[] = 'Xóa nhiệm vụ thất bại!';
-    }
-    header('location:home.php');
-}
-
-// Cập nhật nhiệm vụ
-if (isset($_POST['update_task'])) {
-    $task_id = mysqli_real_escape_string($conn, $_POST['task_id']);
-    $title = mysqli_real_escape_string($conn, $_POST['title']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $estimated_time = mysqli_real_escape_string($conn, $_POST['estimated_time']);
-    $priority = mysqli_real_escape_string($conn, $_POST['priority']);
-    $label = mysqli_real_escape_string($conn, $_POST['label']);
-    $notes = mysqli_real_escape_string($conn, $_POST['notes']);
-    $status = mysqli_real_escape_string($conn, $_POST['status']);
-
-    $update_task = mysqli_query($conn, "UPDATE `tasks` SET 
-        title = '$title', description = '$description', estimated_time = '$estimated_time', 
-        priority = '$priority', label = '$label', notes = '$notes', 
-        status = '$status' WHERE task_id = '$task_id'") 
-        or die('Query failed');
-
-    if ($update_task) {
-        $message[] = 'Cập nhật nhiệm vụ thành công!';
-    } else {
-        $message[] = 'Cập nhật nhiệm vụ thất bại!';
-    }
-}
 if (isset($_POST['share_task'])) {
     $task_id = mysqli_real_escape_string($conn, $_POST['task_id']);
     $shared_with_user_id = mysqli_real_escape_string($conn, $_POST['shared_with_user_id']);
@@ -86,6 +25,60 @@ if (isset($_POST['share_task'])) {
             $message[] = 'Chia sẻ nhiệm vụ thất bại!';
         }
     }
+}
+
+// Thêm vào phần xử lý PHP ở đầu file
+if(isset($_POST['submit_task'])){
+    $task_id = mysqli_real_escape_string($conn, $_POST['task_id']);
+    
+    $file = $_FILES['task_file'];
+    $file_name = $file['name'];
+    $file_tmp = $file['tmp_name'];
+    $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+    
+    // Kiểm tra định dạng file
+    $allowed = array('pdf', 'jpg', 'jpeg', 'png');
+    if(in_array($file_ext, $allowed)){
+        $new_file_name = uniqid() . '.' . $file_ext;
+        move_uploaded_file($file_tmp, "uploads/" . $new_file_name);
+        
+        // Cập nhật DB
+        mysqli_query($conn, "UPDATE tasks SET 
+            file = '$new_file_name',
+            is_done = 1 
+            WHERE task_id = '$task_id'") or die('query failed');
+            
+        $message[] = 'Nộp bài thành công!';
+    } else {
+        $message[] = 'Chỉ chấp nhận file PDF hoặc ảnh!';
+    }
+}
+
+// Thêm vào đầu file PHP
+if(isset($_POST['accept_task'])) {
+    $task_id = mysqli_real_escape_string($conn, $_POST['task_id']);
+    mysqli_query($conn, "UPDATE tasks SET acceptance_status = 'Đã chấp nhận' WHERE task_id = '$task_id'") or die('query failed');
+    $message[] = 'Đã chấp nhận nhiệm vụ!';
+}
+
+if(isset($_POST['reject_task'])) {
+    $task_id = mysqli_real_escape_string($conn, $_POST['task_id']);
+    mysqli_query($conn, "UPDATE tasks SET acceptance_status = 'Từ chối' WHERE task_id = '$task_id'") or die('query failed');
+    $message[] = 'Đã từ chối nhiệm vụ!';
+}
+
+// Xử lý chấp nhận lời mời cộng tác
+if(isset($_POST['accept_collab'])) {
+    $collab_id = mysqli_real_escape_string($conn, $_POST['collab_id']);
+    mysqli_query($conn, "UPDATE collaborations SET is_accept = '1' WHERE collaboration_id = '$collab_id'") or die('query failed');
+    $message[] = 'Đã chấp nhận lời mời cộng tác!';
+}
+
+// Xử lý từ chối lời mời cộng tác  
+if(isset($_POST['reject_collab'])) {
+    $collab_id = mysqli_real_escape_string($conn, $_POST['collab_id']);
+    mysqli_query($conn, "UPDATE collaborations SET is_accept = '2' WHERE collaboration_id = '$collab_id'") or die('query failed');
+    $message[] = 'Đã từ chối lời mời cộng tác!';
 }
 ?>
 
@@ -130,42 +123,23 @@ if (isset($_POST['share_task'])) {
          transform: translateY(-10px); /* Nổi lên một chút */
          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Thêm đổ bóng nhẹ để tạo hiệu ứng nổi */
       }
+
+      .action-btn {
+         padding: 6px 12px !important;
+         border-radius: 4px !important;
+         font-size: 13px !important;
+         margin-right: 5px !important;
+         border: none !important;
+      }
    </style>
 </head>
 <body>
 
 <?php include 'header.php'; ?>
 
-<section class="add-products">
-    <h1 class="title">Quản lý nhiệm vụ</h1>
-
-    <!-- Form thêm nhiệm vụ -->
-    <form action="" method="post">
-        <h3>Thêm nhiệm vụ mới</h3>
-        <input type="text" name="title" class="box" placeholder="Tiêu đề nhiệm vụ" required>
-        <textarea name="description" class="box" placeholder="Mô tả nhiệm vụ"></textarea>
-        <input type="number" name="estimated_time" class="box" placeholder="Thời gian ước tính (giờ)">
-        <label for="">Mức ưu tiên</label>
-        <select name="priority" class="box" required>
-            <option value="Cao">Cao</option>
-            <option value="Trung bình">Trung bình</option>
-            <option value="Thấp">Thấp</option>
-        </select>
-        <label for="">Nhãn</label>
-        <select name="label" class="box" required>
-            <option value="Học tập">Học tập</option>
-            <option value="Công việc">Công việc</option>
-            <option value="Cá nhân">Cá nhân</option>
-        </select>
-        <label for="">Ngày kết thúc dự kiến</label>
-        <input type="date" name="end_date" class="form-control" required>
-        <textarea name="notes" class="box" placeholder="Ghi chú"></textarea>
-        <input type="submit" name="add_task" value="Thêm nhiệm vụ" class="new-btn btn-primary">
-    </form>
-</section>
-
 <section class="show-tasks">
     <div class="container">
+        <h1 class="title mb-4">Danh sách nhiệm vụ</h1>
         <table class="table table-striped table-bordered">
             <thead>
                 <tr>
@@ -175,104 +149,306 @@ if (isset($_POST['share_task'])) {
                     <th>Kết thúc</th>
                     <th>Ưu tiên</th>
                     <th>Trạng thái</th>
+                    <th>Trạng thái xác nhận</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
             <tbody>
                 <?php
-                $select_tasks = mysqli_query($conn, "SELECT * FROM `tasks` Where user_id = $user_id") or die('Query failed');
-                if (mysqli_num_rows($select_tasks) > 0) {
-                    while ($task = mysqli_fetch_assoc($select_tasks)) {
+                $select_tasks = mysqli_query($conn, "SELECT * FROM `tasks` WHERE user_id = $user_id") or die('Query failed');
+                if(mysqli_num_rows($select_tasks) > 0){
+                    while($task = mysqli_fetch_assoc($select_tasks)){
                 ?>
-                        <tr>
-                            <td><?php echo $task['task_id']; ?></td>
-                            <td><?php echo $task['title']; ?></td>
-                            <td><?php echo $task['start_date']; ?></td>
-                            <td><?php echo $task['end_date']; ?></td>
-                            <td><?php echo $task['priority']; ?></td>
-                            <td><?php echo $task['status']; ?></td>
-                            <td>
-                                <button type="button" class="fs-3 btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#shareTaskModal<?php echo $task['task_id']; ?>">Chia sẻ</button>
-                                <button type="button" class="fs-4 btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#updateTaskModal<?php echo $task['task_id']; ?>">Sửa</button>
-                                <a href="home.php?delete=<?php echo $task['task_id']; ?>" class="fs-3 btn-danger btn-sm" onclick="return confirm('Xóa nhiệm vụ này?');">Xóa</a>
-                            </td>
-                        </tr>
+                <tr>
+                    <td><?php echo $task['task_id']; ?></td>
+                    <td><?php echo $task['title']; ?></td>
+                    <td><?php echo $task['start_date']; ?></td>
+                    <td><?php echo $task['end_date']; ?></td>
+                    <td>
+                        <span class="badge bg-<?php 
+                            echo $task['priority'] == 'Cao' ? 'danger' : 
+                            ($task['priority'] == 'Trung bình' ? 'warning' : 'info'); 
+                        ?>"><?php echo $task['priority']; ?></span>
+                    </td>
+                    <td>
+                        <span class="badge bg-<?php 
+                            echo $task['status'] == 'Hoàn thành' ? 'success' : 
+                            ($task['status'] == 'Đang thực hiện' ? 'primary' : 'secondary'); 
+                        ?>"><?php echo $task['status']; ?></span>
+                    </td>
+                    <td>
+                        <?php if($task['acceptance_status'] == 'Chờ xác nhận'): ?>
+                            <div class="d-flex gap-1">
+                                <form action="" method="post" class="d-inline">
+                                    <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+                                    <button type="submit" name="accept_task" class="action-btn btn-success btn-sm">
+                                        <i class="fas fa-check"></i> Nhận
+                                    </button>
+                                </form>
+                                <form action="" method="post" class="d-inline">
+                                    <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+                                    <button type="submit" name="reject_task" class="action-btn btn-danger btn-sm">
+                                        <i class="fas fa-times"></i> Từ chối
+                                    </button>
+                                </form>
+                            </div>
+                        <?php elseif($task['acceptance_status'] == 'Từ chối'): ?>
+                            <span class="badge bg-danger">
+                                <i class="fas fa-times-circle"></i> Từ chối
+                            </span>
+                        <?php else: ?>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check-circle"></i> Đã chấp nhận
+                            </span>
+                        <?php endif; ?>
+                    </td>
+                    <td>
+                        <!-- Nút xem chi tiết -->
+                        <button type="button" class="action-btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailModal<?php echo $task['task_id']; ?>">
+                            <i class="fas fa-eye"></i>
+                        </button>
 
-                        <!-- Modal chia sẻ -->
-                        <div class="modal fade" id="shareTaskModal<?php echo $task['task_id']; ?>" tabindex="-1" aria-labelledby="shareTaskModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="" method="post">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="shareTaskModalLabel">Chia sẻ nhiệm vụ</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
-                                            <label for="shared_with_user_id">Chọn người dùng:</label>
-                                            <select name="shared_with_user_id" class="form-control" required>
-                                                <option value="">Chọn...</option>
-                                                <?php
-                                                // Lấy danh sách người dùng khác để chia sẻ
-                                                $users_query = mysqli_query($conn, "SELECT * FROM `users` WHERE user_id != '$user_id'") or die('Query failed');
-                                                while ($user = mysqli_fetch_assoc($users_query)) {
-                                                    echo "<option value='{$user['user_id']}'>{$user['name']} ({$user['email']})</option>";
-                                                }
-                                                ?>
-                                            </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="new-btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                            <input type="submit" name="share_task" value="Chia sẻ" class="new-btn btn-info">
-                                        </div>
-                                    </form>
+                        <!-- Nút cộng tác -->
+                        <?php if($task['status'] == 'Đang thực hiện' && $task['acceptance_status'] == 'Đã chấp nhận'): ?>
+                            <button type="button" class="action-btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#shareTaskModal<?php echo $task['task_id']; ?>">
+                                <i class="fas fa-share-alt"></i> Cộng tác
+                            </button>
+                        <?php endif; ?>
+
+                        <!-- Nút nộp bài nếu task đã hoàn thành -->
+                        <?php if($task['status'] == 'Hoàn thành' && $task['is_done'] == 0): ?>
+                            <button type="button" class="action-btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#submitModal<?php echo $task['task_id']; ?>">
+                                <i class="fas fa-check"></i> Nộp bài
+                            </button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+
+                <!-- Modal Xem chi tiết -->
+                <div class="modal fade" id="detailModal<?php echo $task['task_id']; ?>" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" style="font-size: 25px !important;">Chi tiết nhiệm vụ</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body" style="font-size: 18px;">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <p><strong>Tiêu đề:</strong> <?php echo $task['title']; ?></p>
+                                        <p><strong>Mô tả:</strong> <?php echo $task['description']; ?></p>
+                                        <p><strong>Thời gian ước tính:</strong> <?php echo $task['estimated_time']; ?> giờ</p>
+                                        <p><strong>Nhãn:</strong> <?php echo $task['label']; ?></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <p><strong>Ngày bắt đầu:</strong> <?php echo $task['start_date']; ?></p>
+                                        <p><strong>Ngày kết thúc:</strong> <?php echo $task['end_date']; ?></p>
+                                        <p><strong>Ưu tiên:</strong> <?php echo $task['priority']; ?></p>
+                                        <p><strong>Ghi chú:</strong> <?php echo $task['notes']; ?></p>
+                                    </div>
                                 </div>
+                                <?php if($task['file']): ?>
+                                <div class="mt-3">
+                                    <h6>File đã nộp:</h6>
+                                    <?php 
+                                        $file_ext = pathinfo($task['file'], PATHINFO_EXTENSION);
+                                        if(in_array($file_ext, ['jpg', 'jpeg', 'png'])):
+                                    ?>
+                                        <img src="uploads/<?php echo $task['file']; ?>" class="img-fluid">
+                                    <?php else: ?>
+                                        <a href="uploads/<?php echo $task['file']; ?>" target="_blank" class="btn btn-primary">
+                                            <i class="fas fa-file-pdf"></i> Xem PDF
+                                        </a>
+                                    <?php endif; ?>
+                                </div>
+                                <?php endif; ?>
                             </div>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Modal chỉnh sửa -->
-                        <div class="modal fade" id="updateTaskModal<?php echo $task['task_id']; ?>" tabindex="-1" aria-labelledby="updateTaskModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <form action="" method="post">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="updateTaskModalLabel">Cập nhật nhiệm vụ</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
-                                            <input type="text" name="title" class="form-control" value="<?php echo $task['title']; ?>" required>
-                                            <textarea name="description" class="form-control"><?php echo $task['description']; ?></textarea>
-                                            <input type="number" name="estimated_time" class="form-control" value="<?php echo $task['estimated_time']; ?>">
-                                            <select name="priority" class="form-control" required>
-                                                <option value="Cao" <?php echo $task['priority'] == 'Cao' ? 'selected' : ''; ?>>Cao</option>
-                                                <option value="Trung bình" <?php echo $task['priority'] == 'Trung bình' ? 'selected' : ''; ?>>Trung bình</option>
-                                                <option value="Thấp" <?php echo $task['priority'] == 'Thấp' ? 'selected' : ''; ?>>Thấp</option>
-                                            </select>
-                                            <select name="label" class="form-control">
-                                                <option value="Học tập" <?php echo $task['label'] == 'Học tập' ? 'selected' : ''; ?>>Học tập</option>
-                                                <option value="Công việc" <?php echo $task['label'] == 'Công việc' ? 'selected' : ''; ?>>Công việc</option>
-                                                <option value="Cá nhân" <?php echo $task['label'] == 'Cá nhân' ? 'selected' : ''; ?>>Cá nhân</option>
-                                            </select>
-                                            <textarea name="notes" class="form-control"><?php echo $task['notes']; ?></textarea>
-                                            <select name="status" class="form-control">
-                                                <option value="Chưa bắt đầu" <?php echo $task['status'] == 'Chưa bắt đầu' ? 'selected' : ''; ?>>Chưa bắt đầu</option>
-                                                <option value="Đang thực hiện" <?php echo $task['status'] == 'Đang thực hiện' ? 'selected' : ''; ?>>Đang thực hiện</option>
-                                                <option value="Hoàn thành" <?php echo $task['status'] == 'Hoàn thành' ? 'selected' : ''; ?>>Hoàn thành</option>
-                                            </select>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="new-btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                                            <input type="submit" name="update_task" value="Lưu thay đổi" class="new-btn btn-primary">
-                                        </div>
-                                    </form>
-                                </div>
+                <!-- Modal Nộp bài -->
+                <div class="modal fade" id="submitModal<?php echo $task['task_id']; ?>" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Nộp bài</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
+                            <form action="" method="post" enctype="multipart/form-data">
+                                <div class="modal-body">
+                                    <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+                                    <div class="mb-3">
+                                        <label class="form-label">Chọn file (PDF hoặc ảnh)</label>
+                                        <input type="file" class="form-control" name="task_file" accept=".pdf,.jpg,.jpeg,.png" required style="font-size: 15px;">
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="action-btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" name="submit_task" class="action-btn btn-primary">Nộp bài</button>
+                                </div>
+                            </form>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Thêm Modal cộng tác -->
+                <div class="modal fade" id="shareTaskModal<?php echo $task['task_id']; ?>" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Chia sẻ nhiệm vụ</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <form action="" method="post">
+                                <div class="modal-body">
+                                    <input type="hidden" name="task_id" value="<?php echo $task['task_id']; ?>">
+                                    <div class="mb-3">
+                                        <label class="form-label">Chọn người dùng để cộng tác:</label>
+                                        <select name="shared_with_user_id" class="form-select" required>
+                                            <option value="">Chọn người dùng...</option>
+                                            <?php
+                                            $users_query = mysqli_query($conn, "SELECT * FROM `users` WHERE user_id != '$user_id' and user_type = 'user'") or die('Query failed');
+                                            while($user = mysqli_fetch_assoc($users_query)){
+                                                echo "<option value='{$user['user_id']}'>{$user['name']} ({$user['email']})</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="action-btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                                    <button type="submit" name="share_task" class="action-btn btn-primary">
+                                        <i class="fas fa-share-alt"></i> Chia sẻ
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
                 <?php
                     }
                 } else {
-                    echo '<tr><td colspan="7" class="text-center">Không có nhiệm vụ nào!</td></tr>';
+                    echo '<tr><td colspan="8" class="text-center">Không có nhiệm vụ nào!</td></tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<section class="show-tasks mt-5">
+    <div class="container">
+        <h1 class="title mb-4">Danh sách nhiệm vụ được mời cộng tác</h1>
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Tiêu đề</th>
+                    <th>Người chia sẻ</th>
+                    <th>Bắt đầu</th>
+                    <th>Kết thúc</th>
+                    <th>Ưu tiên</th>
+                    <th>Trạng thái</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                // Lấy danh sách nhiệm vụ được chia sẻ
+                $select_shared_tasks = mysqli_query($conn, "
+                    SELECT t.*, c.collaboration_id, c.is_accept, u.name as shared_by_name 
+                    FROM tasks t 
+                    JOIN collaborations c ON t.task_id = c.task_id 
+                    JOIN users u ON t.user_id = u.user_id
+                    WHERE c.shared_with_user_id = $user_id
+                ") or die('Query failed');
+
+                if(mysqli_num_rows($select_shared_tasks) > 0){
+                    while($shared_task = mysqli_fetch_assoc($select_shared_tasks)){
+                ?>
+                <tr>
+                    <td><?php echo $shared_task['task_id']; ?></td>
+                    <td><?php echo $shared_task['title']; ?></td>
+                    <td><?php echo $shared_task['shared_by_name']; ?></td>
+                    <td><?php echo $shared_task['start_date']; ?></td>
+                    <td><?php echo $shared_task['end_date']; ?></td>
+                    <td>
+                        <span class="badge bg-<?php 
+                            echo $shared_task['priority'] == 'Cao' ? 'danger' : 
+                            ($shared_task['priority'] == 'Trung bình' ? 'warning' : 'info'); 
+                        ?>"><?php echo $shared_task['priority']; ?></span>
+                    </td>
+                    <td>
+                        <span class="badge bg-<?php 
+                            echo $shared_task['status'] == 'Hoàn thành' ? 'success' : 
+                            ($shared_task['status'] == 'Đang thực hiện' ? 'primary' : 'secondary'); 
+                        ?>"><?php echo $shared_task['status']; ?></span>
+                    </td>
+                    <td>
+                        <?php if($shared_task['is_accept'] == '0'): ?>
+                            <div class="d-flex gap-1">
+                                <form action="" method="post" class="d-inline">
+                                    <input type="hidden" name="collab_id" value="<?php echo $shared_task['collaboration_id']; ?>">
+                                    <button type="submit" name="accept_collab" class="action-btn btn-success btn-sm">
+                                        <i class="fas fa-check"></i> Đồng ý
+                                    </button>
+                                </form>
+                                <form action="" method="post" class="d-inline">
+                                    <input type="hidden" name="collab_id" value="<?php echo $shared_task['collaboration_id']; ?>">
+                                    <button type="submit" name="reject_collab" class="action-btn btn-danger btn-sm">
+                                        <i class="fas fa-times"></i> Từ chối
+                                    </button>
+                                </form>
+                            </div>
+                        <?php elseif($shared_task['is_accept'] == '1'): ?>
+                            <span class="badge bg-success">
+                                <i class="fas fa-check-circle"></i> Đã chấp nhận
+                            </span>
+                        <?php else: ?>
+                            <span class="badge bg-danger">
+                                <i class="fas fa-times-circle"></i> Đã từ chối
+                            </span>
+                        <?php endif; ?>
+
+                        <!-- Thêm nút xem chi tiết -->
+                        <button type="button" class="action-btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#detailModalShared<?php echo $shared_task['task_id']; ?>">
+                            <i class="fas fa-eye"></i>
+                        </button>
+
+                        <!-- Modal Xem chi tiết cho nhiệm vụ được chia sẻ -->
+                        <div class="modal fade" id="detailModalShared<?php echo $shared_task['task_id']; ?>" tabindex="-1">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" style="font-size: 25px !important;">Chi tiết nhiệm vụ được chia sẻ</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    </div>
+                                    <div class="modal-body" style="font-size: 18px;">
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <p><strong>Tiêu đề:</strong> <?php echo $shared_task['title']; ?></p>
+                                                <p><strong>Mô tả:</strong> <?php echo $shared_task['description']; ?></p>
+                                                <p><strong>Thời gian ước tính:</strong> <?php echo $shared_task['estimated_time']; ?> giờ</p>
+                                                <p><strong>Nhãn:</strong> <?php echo $shared_task['label']; ?></p>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p><strong>Ngày bắt đầu:</strong> <?php echo $shared_task['start_date']; ?></p>
+                                                <p><strong>Ngày kết thúc:</strong> <?php echo $shared_task['end_date']; ?></p>
+                                                <p><strong>Ưu tiên:</strong> <?php echo $shared_task['priority']; ?></p>
+                                                <p><strong>Ghi chú:</strong> <?php echo $shared_task['notes']; ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <?php
+                    }
+                } else {
+                    echo '<tr><td colspan="8" class="text-center">Không có nhiệm vụ được chia sẻ nào!</td></tr>';
                 }
                 ?>
             </tbody>
